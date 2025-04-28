@@ -10,6 +10,15 @@ class UserSoalUjianModel extends CI_Model
     public $id_kode_users;
     public $jawaban_dipilih;
 
+    public function insert($data){
+        $this->load->database();
+        if(empty($data)){
+            return false;
+        }
+        $insert =$this->db->insert('user_soal_ujian',$data);
+        return $insert;         
+    }
+
     public function getSoalId($id = false)
     {
         $this->load->database();
@@ -32,6 +41,6 @@ class UserSoalUjianModel extends CI_Model
         $this->db->select('id_soal, jawaban_dipilih');
         $this->db->where('id_kode_users', $id);
         $query = $this->db->get('user_soal_ujian');
-        return $query->result();
+        return $query->result_array();
     }
 }

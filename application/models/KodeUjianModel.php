@@ -11,6 +11,7 @@ class KodeUjianModel extends CI_Model
 
     public function getKodeUjian($id = false)
     {
+        $this->load->database();
         if ($id == false) {
             return $this->db->get('kode_ujian')->result();
         }
@@ -18,7 +19,7 @@ class KodeUjianModel extends CI_Model
         $this->db->where('kode_ujian' ,$id);
         $query = $this->db->select('kode_ujian')->get('kode_ujian');
         $result = $query->result_array();
-        $array = array_column($result, 'kode_ujian');
+        $array = array_column($result, 'kode_ujian')[0];
         if (empty($array)) {
             return null;
         }
@@ -27,10 +28,11 @@ class KodeUjianModel extends CI_Model
     }
     public function getUjian($kode_ujian)
     {
+        $this->load->database();
         $this->db->where('kode_ujian' ,$kode_ujian);
         $query = $this->db->select('id_ujian')->get('kode_ujian');
         $result = $query->result_array();
-        $array = array_column($result, 'id_ujian');
+        $array = array_column($result, 'id_ujian')[0];
 
         if (empty($array)) {
             return null;
@@ -38,8 +40,18 @@ class KodeUjianModel extends CI_Model
 
         return $array;
     }
+
+    public function insert($data){
+        $this->load->database();
+        if(empty($data)){
+            return false;
+        }
+        $insert =$this->db->insert('kode_ujian',$data);
+        return $insert;         
+    }
     public function getKodeUjianByUjian($id_ujian)
     {
+        $this->load->database();
         $this->db->where('id_ujian' ,$id_ujian);
         $query = $this->db->select('kode_ujian')->get('kode_ujian');
         $result = $query->result_array();

@@ -1,10 +1,5 @@
 <?php
 
-namespace App\Models;
-
-use CI_Model;
-use CodeIgniter\Model;
-
 class CountdownModel extends CI_Model
 {
     // protected $table = 'countdown';

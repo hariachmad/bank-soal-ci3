@@ -13,11 +13,12 @@ class MataKuliahModel extends CI_Model
     {
         $this->load->database();
         if ($id == false) {
-            return $this->db->get('mata_kuliah')->result();
+            $query= $this->db->get('mata_kuliah');
+            return $query->result_array();
         }
 
         $this->db->where('id', $id);
         $query = $this->db->get('mata_kuliah');
-        return $query->row();
+        return $query->result_array();
     }
 }

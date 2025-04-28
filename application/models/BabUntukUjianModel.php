@@ -9,6 +9,15 @@ class BabUntukUjianModel extends CI_Model
     public $id_bab;
     public $id_ujian;
 
+    public function insert($data){
+        $this->load->database();
+        if(empty($data)){
+            return false;
+        }
+        $insert =$this->db->insert('bab_untuk_ujian',$data);
+        return $insert;         
+    }
+
     public function getUjian($id_bab)
     {
         $this->load->database();
@@ -24,5 +33,11 @@ class BabUntukUjianModel extends CI_Model
         $query = $this->db->select('id_bab')->get('bab_untuk_ujian');
         $result = $query->result_array();
         return array_column($result, 'id_bab');        
+    }
+
+    public function findAll($id){
+        $this->load->database();
+        $this->db->where('id_ujian' ,$id);
+        return $this->db->get('bab_untuk_ujian')->result_array();
     }
 }

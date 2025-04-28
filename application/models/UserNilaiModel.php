@@ -17,6 +17,6 @@ class UserNilaiModel extends CI_Model
         $this->db->where('id_users', $id_users);
         $this->db->where('id_ujian', $id_ujian); 
         $query = $this->db->get('user_nilai');
-        return $query->row();
+        return $query->row_array();
     }
 }

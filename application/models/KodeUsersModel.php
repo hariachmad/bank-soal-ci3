@@ -16,10 +16,10 @@ class KodeUsersModel extends CI_Model
             return $this->db->get('kode_users')->result();
         }
 
-        $this->db->where('id_bab', $id);
+        $this->db->where('id', $id);
         $query = $this->db->select('kode_ujian')->get('kode_users');
         $result = $query->result_array();
-        return array_column($result, 'kode_ujian');
+        return array_column($result, 'kode_ujian')[0];
     }
     public function getUsers($id = false)
     {
@@ -31,7 +31,7 @@ class KodeUsersModel extends CI_Model
         $this->db->where('id', $id);
         $query = $this->db->select('id_users')->get('kode_users');
         $result = $query->result_array();
-        return array_column($result, 'id_users');
+        return array_column($result, 'id_users')[0];
     }
     public function getKodeUsersId($id_users, $kode_ujian)
     {
@@ -46,5 +46,14 @@ class KodeUsersModel extends CI_Model
             $row = $query->row();
             return $row->id;
         }
+    }
+
+    public function insert($data){
+        $this->load->database();
+        if(empty($data)){
+            return false;
+        }
+        $insert =$this->db->insert('kode_users',$data);
+        return $insert;         
     }
 }

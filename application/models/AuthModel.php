@@ -1,5 +1,6 @@
 <?php
 
+
 class AuthModel extends CI_Model
 {
     // protected $table = 'auth';
@@ -68,6 +69,7 @@ class AuthModel extends CI_Model
         $this->db->limit(1);
         $query = $this->db->get('auth');
 
-        return $query->row();
+        $row = $query->row_array();
+        return $row;
     }
 }

@@ -19,6 +19,14 @@ class UsersModel extends CI_Model
 
         $this->db->where('id', $id);
         $query = $this->db->get('users');
-        return $query->row();
+        return $query->row_array();
+    }
+
+    public function getUserByUsername($username)
+    {
+        $this->load->database();
+        $this->db->where('username', $username);
+        $query = $this->db->get('users');
+        return $query->row_array();
     }
 }

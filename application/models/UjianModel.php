@@ -18,17 +18,39 @@ class UjianModel extends CI_Model
     public $ruang_ujian;
     public $id_mata_kuliah;
 
+    public function insert($data){
+        $this->load->database();
+        if(empty($data)){
+            return false;
+        }
+        $insert =$this->db->insert('ujian',$data);
+        return $insert;         
+    }
+
+    public function save($id,$data){
+        $this->load->database();
+        $this->db->where('id', $id);
+        $this->db->update('ujian',$data);
+        return $this->db->affected_rows();
+    }
+
+    public function delete($id){
+        $this->load->database();
+        $this->db->where('id', $id);
+        return $this->db->delete('ujian');
+    }
+
 
     public function getUjian($id = false)
     {
 
         $this->load->database();
         if ($id == false) {
-            return $this->db->get('ujian')->result();
+            return $this->db->get('ujian')->result_array();
         }
 
         $this->db->where('id', $id);
         $query = $this->db->get('ujian');
-        return $query->row();
+        return $query->result_array();
     }
 }
