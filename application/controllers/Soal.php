@@ -68,7 +68,7 @@ class Soal extends CI_Controller
         try {
             $this->load->model('SoalModel');
             $this->SoalModel->insert([
-                'soal' => "Manusia bernafas menggunakan?",
+                'soal' => $this->input->post('soal'),
                 'jawaban_a' => $this->input->post('jawaban_a'),
                 'jawaban_b' => $this->input->post('jawaban_b'),
                 'jawaban_c' => $this->input->post('jawaban_c'),
@@ -91,7 +91,7 @@ class Soal extends CI_Controller
         $this->load->model('SoalModel');
         $this->SoalModel->delete($id);
         $this->session->set_flashdata('pesan', 'Soal berhasil dihapus');
-        redirect('/banksoal/' . $id_mata_kuliah . '/bab/' . $id_bab);
+        redirect('/bankSoal/' . $id_mata_kuliah . '/bab/' . $id_bab);
     }
 
     public function ubahSoal($id_mata_kuliah, $id_bab, $id)

@@ -79,4 +79,9 @@ $route['banksoal/mahasiswa']='Mahasiswa/masukUjian';
 $route['banksoal/ujian/mendaftar_ujian']='Mahasiswa/mendaftarUjian';
 $route['ujian/detail_ujian/(:num)']='Mahasiswa/detailUjian/$1';
 $route['ujian/mulai_ujian/(:num)']='Mahasiswa/mulaiUjian/$1';
-$route['bankSoal/save-code']='Ujian/saveCode';
+$route['ujian/masuk_ujian/(:num)']='Mahasiswa/masukUjian/$1';
+$route['bankSoal/save-code']='Mahasiswa/masukUjian';
+$route['ujian/simpan_jawaban_dipilih']='Mahasiswa/simpanJawabanDipilih';
+$route['ujian/hasil_ujian/(:num)']='Mahasiswa/hasilUjian/$1';
+
+

@@ -20,6 +20,7 @@ class Mahasiswa extends CI_Controller
 
         $this->load->library('session');
         $this->load->helper('url');
+        $this->load->library('pagination');
     }
 
 
@@ -79,7 +80,7 @@ class Mahasiswa extends CI_Controller
         } else {
             // $validation = \Config\Services::validation();
             // $validation->setError('kode_ujian', 'Kode Salah');
-            $this->form_validation->set_error('Kode Salah');
+            // $this->form_validation->set_error('Kode Salah');
             redirect('/ujian/masuk_ujian');
         }
     }
@@ -92,10 +93,12 @@ class Mahasiswa extends CI_Controller
         $this->load->model('BabModel');
         $this->load->model('UjianModel');
         $kodeUjian = $this->KodeUsersModel->getKode($id);
-        $idUjian = $this->KodeUjianModel->getUjian($kodeUjian);
+        $idUjian = $this->KodeUjianModel->getUjian($kodeUjian[0]);
+
         // $idBabs = $this->BabUntukUjianModel->where('id_ujian', $idUjian)->findColumn('id_bab');
         $this->db->select('id_bab');
         $this->db->where('id_ujian', $idUjian);
+
         $query = $this->db->get('bab_untuk_ujian');
         $idBabs = array();
         if ($query->num_rows() > 0) {
@@ -103,6 +106,7 @@ class Mahasiswa extends CI_Controller
                 $idBabs[] = $row->id_bab;
             }
         }
+
         $sub_cpmk = array();
         foreach ($idBabs as $bab) {
             // $sub_cpmk[] = $this->BabModel->where('id', $bab)->findColumn('sub_cpmk')[0];
@@ -138,42 +142,42 @@ class Mahasiswa extends CI_Controller
         $this->load->model('UserSoalUjianModel');
         $this->load->database();
         $kodeUjian = $this->KodeUsersModel->getKode($id);
-        $id_ujian = $this->KodeUjianModel->getUjian($kodeUjian);
+        $id_ujian = $this->KodeUjianModel->getUjian($kodeUjian[0]);
         // $assignedBabs = $this->BabUntukUjianModel->where('id_ujian', $id_ujian)->findColumn('id_bab');
         $this->db->where('id_ujian', $id_ujian);
         $query = $this->db->select('id_bab')->get('bab_untuk_ujian');
         $assignedBabs = $query->result_array();
-        $randomizedSoal = [];
+        //--------------------assign_babs adalah id bab yang dipakai untuk ujian-------------------
         // $questionCount = $this->UjianModel->where('id', $id_ujian)->findColumn('jumlah_soal')[0];
         $this->db->where('id', $id_ujian);
         $query = $this->db->select('jumlah_soal')->get('ujian');
         $questionCount = $query->result_array()[0];
-        $randomizedSoal = [];
         // $random = $this->UjianModel->where('id', $id_ujian)->findColumn('random')[0];
         $this->db->where('id', $id_ujian);
         $query = $this->db->select('random')->get('ujian');
         $random = $query->result_array()[0];
         $randomizedSoal = [];
-        $questionPerBab = round((int)$questionCount / count($assignedBabs));
-        foreach ($assignedBabs[0] as $index => $assignedBab) {
+        $randomSoal = [];
+        $questionPerBab = round((int) $questionCount / count($assignedBabs));
+        foreach ($assignedBabs as $index => $assignedBab) {
             // $allSoal = $this->SoalModel->where('id_bab', $assignedBab)->findAll();
             $this->load->database();
-            $allSoal = $this->db->where('id_bab', $assignedBab)->get('soal')->result();
-            if ($random) {
+            $allSoal = $this->db->where('id_bab', $assignedBab["id_bab"])->get('soal')->result_array();
+            if (false) {
                 shuffle($allSoal);
             }
-            if ($index === count($assignedBabs) - 1) {
-                $randomSoal = array_slice($allSoal, 0, $questionCount);
+            if ($index == count($assignedBabs) - 1) {
+                $randomSoal = array_slice($allSoal, 0, (int) $questionCount["jumlah_soal"]);
+
             } else {
                 $randomSoal = array_slice($allSoal, 0, $questionPerBab);
-                $questionCount = (int)$questionCount - (int)$questionPerBab;
+                $questionCount = (int) $questionCount - (int) $questionPerBab;
             }
             $randomizedSoal = array_merge($randomizedSoal, $randomSoal);
         }
-        $recordExists = false;
-
+        // $recordExists = false;
         foreach ($randomizedSoal as $soal) {
-            $idSoal = $soal->id;
+            $idSoal = $soal["id"];
             // $existingRecord = $this->UserSoalUjianModel
             //     ->where('id_soal', $idSoal)
             //     ->where('id_kode_users', $id)
@@ -185,33 +189,45 @@ class Mahasiswa extends CI_Controller
                 ->get('user_soal_ujian')
                 ->row();
 
-            if (!empty($existingRecord)) {
+            if (empty($existingRecord)) {
                 // Set the flag to true if an existing record is found
-                $recordExists = true;
+                // $recordExists = true;
                 // No need to continue the loop, as we found an existing record
-                break;
-            }
-        }
-
-        // Insert the record only if the flag remains false
-        if (!$recordExists) {
-            foreach ($randomizedSoal as $soal) {
-                $idSoal = $soal->id;
+                // break;
                 $this->UserSoalUjianModel->insert([
                     'id_soal' => $idSoal,
                     'id_kode_users' => $id,
                 ]);
             }
         }
+
+        // Insert the record only if the flag remains false
+        // if (!$recordExists) {
+        //     foreach ($randomizedSoal as $soal) {
+        //         $idSoal = $soal->id;
+        //         $this->UserSoalUjianModel->insert([
+        //             'id_soal' => $idSoal,
+        //             'id_kode_users' => $id,
+        //         ]);
+        //     }
+        // }
     }
     public function simpanJawabanDipilih()
     {
-        $this->UserSoalUjianModel->where('id_kode_users', $this->request->getPost('id_kode_users'))
-            ->where('id_soal', $this->request->getPost('id_soal'))
-            ->set(['jawaban_dipilih' => $this->request->getPost('jawaban_dipilih')])
-            ->update();
+        $this->load->database();
+        // $this->UserSoalUjianModel->where('id_kode_users', $this->request->getPost('id_kode_users'))
+        //     ->where('id_soal', $this->request->getPost('id_soal'))
+        //     ->set(['jawaban_dipilih' => $this->request->getPost('jawaban_dipilih')])
+        //     ->update();
 
-        return $this->response->setJSON(['success' => true]);
+        $this->db->where('id_kode_users', $this->input->post('id_kode_users'))
+            ->where('id_soal', $this->input->post('id_soal'))
+            ->set('jawaban_dipilih', $this->input->post('jawaban_dipilih'))
+            ->update('user_soal_ujian');
+
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(['success' => true]));
     }
 
     public function saveRemainingDuration()
@@ -226,60 +242,68 @@ class Mahasiswa extends CI_Controller
     }
     public function mulaiUjian($id)
     {
+        $this->load->database();
         $this->load->model('KodeUsersModel');
         $this->load->model('KodeUjianModel');
         $this->load->model('UserSoalUjianModel');
         $this->load->model('CountdownModel');
         $this->load->model('UjianModel');
         $this->load->model('SoalModel');
+
         $kodeUjian = $this->KodeUsersModel->getKode($id);
-        $idUjian = $this->KodeUjianModel->getUjian($kodeUjian);
+        $idUjian = $this->KodeUjianModel->getUjian($kodeUjian[0]);
         Mahasiswa::randomize($id);
         $selectedQuestionIds = $this->UserSoalUjianModel->getSoalId($id);
         $selectedAnswers = $this->UserSoalUjianModel->getSoalIdAndJawabanDipilih($id);
         $remainingTime = $this->CountdownModel->getCountdown($id);
-        $currentPage = $this->input->post('page_soal') ? $this->input->post('page_soal') : 1;
 
-        $this->load->model('SoalModel');
-        $this->load->library('pagination');
+        $currentPage = $this->input->get('page_soal') ? $this->input->get('page_soal') + 1 : 1;
 
-        $config['base_url'] = base_url('Mahasiswa/mulaiUjian/' . $id.'/');
-        $config['total_rows'] = $this->SoalModel->count_selected_questions($selectedQuestionIds);
+        $config['base_url'] = base_url('index.php/Mahasiswa/mulaiUjian/' . $id);
+        $config['total_rows'] = count($selectedQuestionIds);
         $config['per_page'] = 1;
-        $config['uri_segment'] = 3;
-        $config['enable_query_strings'] = TRUE;
         $config['page_query_string'] = TRUE;
-        $config['reuse_query_string'] = TRUE;
-
+        $config['query_string_segment'] = 'page_soal';
         $this->pagination->initialize($config);
 
-        $offset = $this->input->get('per_page') ? $this->input->get('per_page') : 0;
+        $offset = ($currentPage - 1) * $config['per_page'];
+        $this->db->where_in('id', $selectedQuestionIds);
+        $this->db->limit($config['per_page'], $offset);
+        $soal = $this->db->get('soal')->result();
 
-        
-        $data = [
+        $data = array(
             'title' => 'Bank Soal',
-            'ujian' => $this->UjianModel->getUjian($idUjian)[0],
-            // 'soal' => $this->SoalModel->whereIn('id', $selectedQuestionIds)->paginate(1, 'soal'),
-            // 'pager' => $this->SoalModel->whereIn('id', $selectedQuestionIds)->pager,
+            'ujian' => $this->UjianModel->getUjian($idUjian),
+            'soal' => $soal,
+            'pager' => $this->pagination->create_links(),
             'currentPage' => $currentPage,
             'jawaban' => $selectedAnswers,
             'serverTime' => date("H:i:s"),
             'remainingTime' => $remainingTime,
             'id' => $id
-        ];
-        $data['soal'] = $this->SoalModel->get_selected_questions($selectedQuestionIds, $config['per_page'], $offset);
-        $data['pager'] = $this->pagination->create_links();
+        );
+
         $this->load->view('bankSoal/mahasiswa/mulaiUjian', $data);
     }
     public function hasilUjian($id)
     {
+        $this->load->database();
+        $this->load->model('KodeUsersModel');
+        $this->load->model('KodeUjianModel');
+        $this->load->model('UjianModel');
+        $this->load->model('UserSoalUjianModel');
+        $this->load->model('BabUntukUjianModel');
+        $this->load->model('UserNilaiModel');
+        $this->load->model('BabModel');
         $kodeUjian = $this->KodeUsersModel->getKode($id);
-        $idUjian = $this->KodeUjianModel->getUjian($kodeUjian);
+        $idUjian = $this->KodeUjianModel->getUjian($kodeUjian[0]);
         $idUsers = $this->KodeUsersModel->getUsers($id);
         $ujian = $this->UjianModel->getUjian($idUjian);
         $soalIdAndJawaban = $this->UserSoalUjianModel->getSoalIdAndJawabanDipilih($id);
         $soalId = array_column($soalIdAndJawaban, 'id_soal');
-        $soals = $this->SoalModel->whereIn('id', $soalId)->findAll();
+        // $soals = $this->SoalModel->whereIn('id', $soalId)->findAll();
+        $this->db->where_in('id', $soalId);
+        $soals = $this->db->get('soal')->result_array();
         $jawabanDipilih = [];
 
         foreach ($soals as $soal) {
@@ -298,22 +322,39 @@ class Mahasiswa extends CI_Controller
         $existingRecord = $this->UserNilaiModel->getNilai($idUsers, $idUjian);
 
         if ($existingRecord && $existingRecord['nilai'] < $nilai) {
-            $this->UserNilaiModel->update($existingRecord['id'], ['nilai' => $nilai]);
+            // $this->UserNilaiModel->update($existingRecord['id'], ['nilai' => $nilai]);
+            $this->db->where('id', $existingRecord['id']);
+            $this->db->update('user_nilai', ['nilai' => $nilai]);
         } elseif (!$existingRecord) {
-            $this->UserNilaiModel->insert([
+            // $this->UserNilaiModel->insert([
+            //     'id_users' => $idUsers,
+            //     'id_ujian' => $idUjian,
+            //     'nilai' => $nilai
+            // ]);
+            $this->db->insert('user_nilai', [
                 'id_users' => $idUsers,
                 'id_ujian' => $idUjian,
                 'nilai' => $nilai
             ]);
         }
 
-        $idBabs = $this->BabUntukUjianModel->where('id_ujian', $idUjian)->findColumn('id_bab');
+        // $idBabs = $this->BabUntukUjianModel->where('id_ujian', $idUjian)->findColumn('id_bab');
+        $this->db->select('id_bab');
+        $this->db->where('id_ujian', $idUjian);
+        $query = $this->db->get('bab_untuk_ujian');
+        $idBabs = array_column($query->result_array(), 'id_bab');
         $sub_cpmk = [];
         $jumlah_soal_per_sub_cpmk = [];
         $jumlah_benar_per_sub_cpmk = [];
 
         foreach ($idBabs as $bab) {
-            $sub_cpmk[] = $this->BabModel->where('id', $bab)->findColumn('sub_cpmk')[0];
+            // $sub_cpmk[] = $this->BabModel->where('id', $bab)->findColumn('sub_cpmk')[0];
+            $this->db->select('sub_cpmk');
+            $this->db->where('id', $bab);
+            $query = $this->db->get('bab');
+            $result = $query->result_array();
+
+            $sub_cpmk = array_column($result, 'sub_cpmk');
 
             $count_jumlah_soal = 0;
             $count_jumlah_benar = 0;
@@ -354,6 +395,9 @@ class Mahasiswa extends CI_Controller
             'sub_cpmk' => $combinedArray,
             'id' => $id
         ];
-        return view('bankSoal/mahasiswa/hasilUjian', $data);
+
+
+        
+        $this->load->view('bankSoal/mahasiswa/hasilUjian', $data);
     }
 }

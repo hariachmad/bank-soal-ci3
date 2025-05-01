@@ -19,7 +19,7 @@ class KodeUsersModel extends CI_Model
         $this->db->where('id', $id);
         $query = $this->db->select('kode_ujian')->get('kode_users');
         $result = $query->result_array();
-        return array_column($result, 'kode_ujian')[0];
+        return array_column($result, 'kode_ujian');
     }
     public function getUsers($id = false)
     {

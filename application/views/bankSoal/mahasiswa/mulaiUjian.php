@@ -62,9 +62,9 @@
             </nav>
             <div class="container-fluid">
                 <div class="container">
-                    <h1 class="mt-2"><?= $ujian['nama_ujian'] ?></h1><br>
-                    <h2 class="mt-2">Sisa Waktu: <span id="countdown"></span></h2><br>
-                    <form action="/ujian/hasil_ujian/<?= $id ?>" method="post" id="ujianForm">
+                    <h1 class="mt-2"><?= $ujian[0]['nama_ujian'] ?></h1><br>
+                    <!-- <h2 class="mt-2">Sisa Waktu: <span id="countdown"><?= $remainingTime ?></span></h2><br> -->
+                    <form action="/bank-soal-ci3/index.php/ujian/hasil_ujian/<?= $id ?>" method="post" id="ujianForm">
                         <?php foreach ($soal as $k):
                             $jawaban_dipilih = null;
                             foreach ($jawaban as $jawaban) {
@@ -124,26 +124,35 @@
                                                 for="checkbox_bab_<?= $k->id ?>"><?= $k->jawaban_d ?></label>
                                         </div>
                                     </div>
-                                <?php endforeach;
-                        ?>
+                                <?php endforeach; ?>
                             </div>
-                            <div class="col">
-                                <?= $pager; ?>
-                                <input type="hidden" name="timer" id="timerInput">
+                            <div style="margin-top: 20px;display: flex; flex-direction: row; ">
+                                <div class="col">
+                                    <?= $pager; ?>
+                                    <input type="hidden" name="timer" id="timerInput">
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 150px;">Submit<button>
                             </div>
                         </div>
                     </form>
                 </div>
+                <!-- <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var inputs = document.querySelectorAll('input[name="jawaban[' + <?= $k->id; ?> + '][]"]');
+                        console.log(inputs);
+                    })
+                </script> -->
 
                 <script>
                     $(document).ready(function () {
-                        $('input[name="jawaban[' + <?= $k['id'] ?> + '][]"]').click(function (event) {
-                            event.preventDefault(); // Prevent the default form submission
+                        $('input[name="jawaban[' + <?= $k->id ?> + '][]"]').click(function (event) {
+                            event.preventDefault();
                             var idKodeUsers = <?= $id ?>;
-                            var idSoal = <?= $k['id'] ?>;
+                            var idSoal = <?= $k->id ?>;
                             var jawabanDipilih = this.value;
+                            console.log(this.value);
                             $.ajax({
-                                url: '/ujian/simpan_jawaban_dipilih',
+                                url: '/bank-soal-ci3/index.php/ujian/simpan_jawaban_dipilih',
                                 type: 'POST',
                                 data: {
                                     id_kode_users: idKodeUsers,
@@ -160,91 +169,6 @@
                         });
                     });
 
-                    // Set the countdown duration in minutes
-                    var countdownDuration = <?= $ujian['durasi_ujian'] ?>;
-
-                    // Get the countdown element
-                    var countdownElement = document.getElementById('countdown');
-
-                    // Start the countdown immediately
-                    startCountdown();
-
-                    function startCountdown() {
-
-                        var remainingTime = <?= $remainingTime ?>;
-
-                        // Calculate the total countdown time in milliseconds
-                        var totalTime = countdownDuration * 60 * 1000;
-
-                        // If the remaining time is not set or has expired, calculate and set it
-                        if (!remainingTime || remainingTime < 0) {
-                            remainingTime = totalTime;
-                            $.ajax({
-                                url: '/ujian/save_remaining_duration',
-                                method: 'POST',
-                                data: {
-                                    idKodeUsers: <?= $id ?>,
-                                    remainingDuration: remainingTime
-                                },
-                                success: function (response) {
-                                    console.log('Remaining duration saved or updated in the database.');
-                                },
-                                error: function (xhr, status, error) {
-                                    console.error('Error saving or updating remaining duration:', error);
-                                }
-                            });
-                        }
-
-                        // Calculate the countdown end time based on the remaining time
-                        var endTime = Date.now() + remainingTime;
-
-                        // Update the countdown immediately
-                        updateCountdown();
-
-                        // Start the countdown interval
-                        var countdown = setInterval(updateCountdown, 1000);
-
-                        // Function to update the countdown
-                        function updateCountdown() {
-                            // Calculate the remaining time
-                            remainingTime = endTime - Date.now();
-                            // Check if the countdown has reached 0
-                            if (remainingTime < 0) {
-                                // Stop the countdown
-                                clearInterval(countdown);
-
-                                // Auto-submit the form
-                                document.getElementById('ujianForm').submit();
-                                return;
-                            }
-                            var hours = Math.floor(remainingTime / (60 * 60 * 1000));
-                            var minutes = Math.floor(remainingTime / (60 * 1000));
-                            var seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
-
-                            // Format the time with leading zeros
-                            var formattedTime = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
-
-                            // Display the countdown timer
-                            countdownElement.textContent = formattedTime;
-
-                            window.onbeforeunload = function () {
-                                $.ajax({
-                                    url: '/ujian/save_remaining_duration',
-                                    method: 'POST',
-                                    data: {
-                                        idKodeUsers: <?= $id ?>,
-                                        remainingDuration: remainingTime
-                                    },
-                                    success: function (response) {
-                                        console.log('Remaining duration saved or updated in the database.');
-                                    },
-                                    error: function (xhr, status, error) {
-                                        console.error('Error saving or updating remaining duration:', error);
-                                    }
-                                });
-                            };
-                        }
-                    }
                 </script>
             </div>
         </div>

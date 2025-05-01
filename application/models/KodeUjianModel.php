@@ -18,8 +18,8 @@ class KodeUjianModel extends CI_Model
 
         $this->db->where('kode_ujian' ,$id);
         $query = $this->db->select('kode_ujian')->get('kode_ujian');
-        $result = $query->result_array();
-        $array = array_column($result, 'kode_ujian')[0];
+        $result = $query->result();
+        $array = array_column($result, 'kode_ujian');
         if (empty($array)) {
             return null;
         }
