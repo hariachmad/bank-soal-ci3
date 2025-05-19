@@ -54,8 +54,8 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = 'AuthController/login';
+$route['logout'] = 'AuthController/logout';
 $route['register'] = 'AuthController/register';
-$route['logout'] = 'AuthController/login';
 $route['banksoal'] = 'BankSoal/index';
 $route['bankSoal/(:num)'] = 'BankSoal/daftarBab/$1';
 $route['bankSoal/(:num)/tambah_ujian'] = 'Ujian/tambahUjian/$1';

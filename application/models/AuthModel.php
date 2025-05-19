@@ -36,15 +36,15 @@ class AuthModel extends CI_Model
         return $this->db->count_all_results('auth') > 0;
     }
 
-    protected function hashPassword(array $data)
+    public function hashPassword( $data)
     {
         $this->load->database();
-        if (!isset($data['data']['password'])) {
-            return $data;
-        }
+        // if (!isset($data['data']['password'])) {
+        //     return $data;
+        // }
 
         $this->load->library('encryption');
-        $data['data']['password'] = password_hash($data['data']['password'], PASSWORD_DEFAULT);
+        $data = password_hash($data, PASSWORD_DEFAULT);
         return $data;
     }
 

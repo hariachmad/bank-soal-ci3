@@ -15,6 +15,11 @@ class AuthController extends CI_Controller
         //   
     }
 
+    public function logout()
+    {
+        $this->load->view("auth/login");   
+    }
+
     public function viewRegister()
     {
         $this->load->view("auth/register");
@@ -24,6 +29,7 @@ class AuthController extends CI_Controller
     {
         $this->load->helper('url');
         $this->load->model('AuthModel');
+        $this->load->model('UsersModel');
         $register = $this->input->post("register");
         if ($register) {
             $email = $this->input->post("email");
@@ -31,6 +37,7 @@ class AuthController extends CI_Controller
             $username = $this->input->post("username");
             $password = $this->input->post("password");
             $pass_confirm = $this->input->post("pass_confirm");
+            $roles = $this->input->post("roles");
 
             if ($fullname == '') {
                 $this->session->set_flashdata('errors.fullname', "Silahkan masukan kembali Fullname");
@@ -73,10 +80,19 @@ class AuthController extends CI_Controller
                 'email' => $email,
                 'username' => $username,
                 'fullname' => $fullname,
-                'password' => $password,
+                'password' => $this->AuthModel->hashPassword($password),
+            ];
+
+            $users = [
+                'email' => $email,
+                'username' => $username,
+                'fullname' => $fullname,
+                'password_hash' => $this->AuthModel->hashPassword($password),
+                'role' => $roles
             ];
 
             if ($this->AuthModel->registerUser($data)) {
+                $this->UsersModel->registerUser($users);
                 $this->session->set_flashdata('success', "Registrasi berhasil! Silakan login.");
                 redirect('login');
             } else {

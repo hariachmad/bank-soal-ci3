@@ -22,6 +22,14 @@ class UsersModel extends CI_Model
         return $query->row_array();
     }
 
+    public function registerUser(array $data)
+    {
+        $this->load->database();
+        $this->db->insert('users', $data);
+        return $this->db->insert_id();
+    }
+
+
     public function getUserByUsername($username)
     {
         $this->load->database();

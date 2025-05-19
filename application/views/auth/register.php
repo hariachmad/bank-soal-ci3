@@ -35,16 +35,24 @@
                                 <label for="fullname">Full Name</label>
                                 <input type="fullname"
                                     class="form-control <?php if ($this->session->flashdata('errors.fullname')): ?>is-invalid<?php endif ?>"
-                                    name="fullname" aria-describedby="fullnameHelp" placeholder="Full Name"
-                                    value="">
+                                    name="fullname" aria-describedby="fullnameHelp" placeholder="Full Name" value="">
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email"
                                     class="form-control <?php if ($this->session->flashdata('errors.email')): ?>is-invalid<?php endif ?>"
-                                    name="email" aria-describedby="emailHelp" placeholder="Email"
-                                    value="">
+                                    name="email" aria-describedby="emailHelp" placeholder="Email" value="">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role">Role</label>
+                                <select id="roles" name="roles"
+                                    class="form-control <?php if ($this->session->flashdata('errors.email')): ?>is-invalid<?php endif ?>">
+                                    <option value="Guru">Guru</option>
+                                    <option value="Mahasiswa">Mahasiswa</option>
+                                </select>
+
                             </div>
 
                             <div class="form-group">
