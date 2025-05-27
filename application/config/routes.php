@@ -77,11 +77,14 @@ $route['bankSoal/(:num)/bab/(:num)/hapus_soal/(:num)'] = 'Soal/hapusSoal/$1/$2/$
 $route['bankSoal/(:num)/update_bab/(:num)'] = 'BankSoal/updateBab/$1/$2';
 $route['banksoal/mahasiswa']='Mahasiswa/masukUjian';
 $route['banksoal/ujian/mendaftar_ujian']='Mahasiswa/mendaftarUjian';
+$route['banksoal/mata_kuliah/tambah_mata_kuliah']='BankSoal/tambahMataKuliah';
 $route['ujian/detail_ujian/(:num)']='Mahasiswa/detailUjian/$1';
 $route['ujian/mulai_ujian/(:num)']='Mahasiswa/mulaiUjian/$1';
 $route['ujian/masuk_ujian/(:num)']='Mahasiswa/masukUjian/$1';
-$route['bankSoal/save-code']='Mahasiswa/masukUjian';
+// $route['bankSoal/save-code']='Mahasiswa/masukUjian';
+$route['bankSoal/save-code']='Ujian/saveCode';
 $route['ujian/simpan_jawaban_dipilih']='Mahasiswa/simpanJawabanDipilih';
 $route['ujian/hasil_ujian/(:num)']='Mahasiswa/hasilUjian/$1';
+$route['ujian/export/(:num)']='Ujian/exportToExcel/$1';
 
 

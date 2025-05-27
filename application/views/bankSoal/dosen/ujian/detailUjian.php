@@ -66,10 +66,10 @@
                     <div class="row">
                         <div class="col">
                             <h2 class="mt-2"><?= $ujian['nama_ujian'] ?></h2><br>
-                            <a class="btn btn-primary" href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/">Kembali ke Halaman
+                            <a class="btn btn-primary"
+                                href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/">Kembali ke Halaman
                                 Sebelumnya</a><br><br>
-                            <a id="exportExcel" class="btn btn-success" href="/banksoal/export/<?= $ujian['id']; ?>/"
-                                role="button">Export Nilai ke Excel</a>
+                            <a id="exportExcel" class="btn btn-success" href="#" role="button">Export Nilai ke Excel</a>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -189,13 +189,39 @@
                     document.getElementById('exportExcel').addEventListener('click', function () {
                         // Send an AJAX request to save the code
                         var xhttp = new XMLHttpRequest();
+                        xhttp.responseType = 'blob';
+                        xhttp.open('POST', 'http://localhost:4000/export-excel', true);
+                        xhttp.setRequestHeader('Content-type', 'application/json');
                         xhttp.onreadystatechange = function () {
                             if (this.readyState == 4 && this.status == 200) {
                                 console.log('Excel exported');
+                                const blob = new Blob([this.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                                const downloadUrl = URL.createObjectURL(blob);
+                                const a = document.createElement('a');
+                                a.href = downloadUrl;
+                                a.download = 'laporan.xlsx';
+                                const contentDisposition = xhttp.getResponseHeader('Content-Disposition');
+                                if (contentDisposition) {
+                                    const filenameMatch = contentDisposition.match(/filename="?(.+)"?/);
+                                    if (filenameMatch && filenameMatch[1]) {
+                                        a.download = filenameMatch[1];
+                                    }
+                                }
+                                document.body.appendChild(a);
+                                a.click();
+                                setTimeout(() => {
+                                    document.body.removeChild(a);
+                                    URL.revokeObjectURL(downloadUrl);
+                                }, 100);
+
+                            } else if (this.status != 200) {
+                                console.error("Gagal mengirim request. Status:", this.status);
                             }
                         };
-                        xhttp.open('POST', '/ujian/export/<?= $ujian['id']; ?>', true);
-                        xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                        
+                        xhttp.send(JSON.stringify({
+                            id: <?= $ujian['id']; ?>
+                        }));
                     });
 
                     function generateRandomCode() {

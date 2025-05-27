@@ -49,7 +49,7 @@
                                 <label for="role">Role</label>
                                 <select id="roles" name="roles"
                                     class="form-control <?php if ($this->session->flashdata('errors.email')): ?>is-invalid<?php endif ?>">
-                                    <option value="Guru">Guru</option>
+                                    <option value="Dosen">Dosen</option>
                                     <option value="Mahasiswa">Mahasiswa</option>
                                 </select>
 

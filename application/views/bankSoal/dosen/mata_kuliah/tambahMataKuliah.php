@@ -15,8 +15,8 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Philosopher:regular">
-    <link rel="stylesheet" href="<?= base_url("/public/styles.css") ?>">
-    <title><?= $title; ?></title>
+    <link rel="stylesheet" href="<?= base_url("public/styles.css") ?>">
+    <title>Bank Soal</title>
 </head>
 
 <body>
@@ -38,11 +38,6 @@
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
             </div>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal/mata_kuliah/tambah_mata_kuliah"><img
-                        src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
-                        style="width: 30px;"><span class="ms-2 fs-8">Tambah Mata-Kuliah</span></a>
-            </div>
         </div>
         <div id="page-content-wrapper" style="background-color: #f4f6f9;">
             <nav class="navbar navbar-expand-lg navbar-dark border-bottom" style="background-color: #dc3545;">
@@ -53,7 +48,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#" style="line-height: 0.8em;">
                                     <small><span
-                                            class="text-uppercase"><?= $session["fullname"]; ?></span></small><br>
+                                            class="text-uppercase"><?= $this->session->userdata("fullname") ?></span></small><br>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" id="absolute">
                                     <a href="<?= site_url("logout") ?>" class="dropdown-item">
@@ -65,28 +60,68 @@
                     </div>
                 </div>
             </nav>
-            <div class="container-fluid"></div>
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <h2 class="mt-2">Bank Soal</h2>
-                        </br></br>
-                        <div class="col d-flex justify-content-center">
-                            <?php foreach ($mataKuliah as $k): ?>
-                                <div class="card text-center" style="width: 18rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?= $k['nama_mata_kuliah'] ?></h5>
-                                        <p class="card-text"><?= $k['kode_mata_kuliah'] ?></p>
-                                        <a href="/bank-soal-ci3/index.php/bankSoal/<?= $k['id']; ?>" class="btn btn-primary">Detail</a>
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <form>
+                                    <div class="mb-3">
+                                        <label for="kodeMatkul" class="form-label">Kode Mata Kuliah</label>
+                                        <input type="text" class="form-control" id="kodeMatkul" placeholder="Contoh: MK001" required>
+                                        <div class="form-text">Masukkan kode mata kuliah (3 huruf dan 3 angka)</div>
                                     </div>
-                                </div>
-                            <?php endforeach; ?>
+
+                                    <div class="mb-3">
+                                        <label for="namaMatkul" class="form-label">Nama Mata Kuliah</label>
+                                        <input type="text" class="form-control" id="namaMatkul" placeholder="Contoh: Pemrograman Web" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="sks" class="form-label">Jumlah SKS</label>
+                                        <select class="form-select" id="sks" required>
+                                            <option value="" selected disabled>Pilih SKS</option>
+                                            <option value="1">1 SKS</option>
+                                            <option value="2">2 SKS</option>
+                                            <option value="3">3 SKS</option>
+                                            <option value="4">4 SKS</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="semester" class="form-label">Semester</label>
+                                        <select class="form-select" id="semester" required>
+                                            <option value="" selected disabled>Pilih Semester</option>
+                                            <option value="1">Semester 1</option>
+                                            <option value="2">Semester 2</option>
+                                            <option value="3">Semester 3</option>
+                                            <option value="4">Semester 4</option>
+                                            <option value="5">Semester 5</option>
+                                            <option value="6">Semester 6</option>
+                                            <option value="7">Semester 7</option>
+                                            <option value="8">Semester 8</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="deskripsi" class="form-label">Deskripsi Mata Kuliah</label>
+                                        <textarea class="form-control" id="deskripsi" rows="3" placeholder="Masukkan deskripsi singkat mata kuliah"></textarea>
+                                    </div>
+
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Bootstrap JS Bundle with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         </div>
-    </div>
     </div>
     <script>
         window.addEventListener('DOMContentLoaded', event => {

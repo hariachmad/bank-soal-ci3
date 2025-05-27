@@ -1,10 +1,15 @@
 <?php
 
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+require_once APPPATH.'..\vendor\autoload.php';
+
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 
 class Ujian extends CI_Controller
 {
+    
     // protected $MataKuliahModel;
     // protected $BabModel;
     // protected $SoalModel;
@@ -19,6 +24,10 @@ class Ujian extends CI_Controller
         parent::__construct();
         $this->load->library('session');
         $this->load->helper('url');
+        $this->load->database();
+        $this->load->dbutil();
+        $this->load->helper('file');
+        $this->load->helper('download');
         // $this->MataKuliahModel = new MataKuliahModel();
         // $this->BabModel = new BabModel();
         // $this->SoalModel = new SoalModel();
@@ -36,7 +45,7 @@ class Ujian extends CI_Controller
             'title' => 'Bank Soal',
             'id' => $id,
             'bab' => $this->BabModel->getBab(),
-            'session'=> ["fullname" => $this->session->userdata("fullname")],
+            'session' => ["fullname" => $this->session->userdata("fullname")],
         ];
 
         $this->load->view('bankSoal/dosen/ujian/tambahUjian', $data);
@@ -46,7 +55,7 @@ class Ujian extends CI_Controller
     {
         $this->load->model('BabUntukUjianModel');
         $this->load->model('BabModel');
-        $filteredData =  $this->BabUntukUjianModel->findAll($id);
+        $filteredData = $this->BabUntukUjianModel->findAll($id);
         $babData = [];
         foreach ($filteredData as $row) {
             $idBab = $row['id_bab'];
@@ -104,9 +113,9 @@ class Ujian extends CI_Controller
         $this->load->model('UjianModel');
         $this->load->model('BabUntukUjianModel');
         $query = $this->db->select('nama_ujian')
-        ->from('ujian')
-        ->where('id_mata_kuliah', $id)
-        ->where('nama_ujian', $this->input->post('nama_ujian'));
+            ->from('ujian')
+            ->where('id_mata_kuliah', $id)
+            ->where('nama_ujian', $this->input->post('nama_ujian'));
         $result = $query->get()->result_array();
         if ($result) {
             $same_nama = array_filter($result, function ($row) {
@@ -186,8 +195,8 @@ class Ujian extends CI_Controller
         ) {
             redirect('/banksoal/' . $id_mata_kuliah . '/ubah_ujian/' . $id)->withInput();
         }
-        
-        $this->UjianModel->save($id,[
+
+        $this->UjianModel->save($id, [
             'nama_ujian' => $this->input->post('nama_ujian'),
             'deskripsi_ujian' => $this->input->post('deskripsi_ujian'),
             'waktu_buka_ujian' => date('Y-m-d H:i:s', strtotime($waktu_buka_ujian)),
@@ -246,5 +255,60 @@ class Ujian extends CI_Controller
         ]);
 
         return $this->response->setJSON(['success' => true]);
+    }
+
+    public function exportToExcel($id)
+    {
+        $this->load->model("UjianModel");
+        $this->load->model("UserNilaiModel");
+        $this->load->model("UsersModel");
+        $ujian = $this->UjianModel->getUjian($id)[0];
+        $namaUjian = $ujian['nama_ujian'];
+        $stringLowercase = strtolower($namaUjian);
+        $stringWithUnderscores = str_replace(' ', '_', $stringLowercase);
+
+
+        // $nilai = $this->UserNilaiModel->where('id_ujian', $id)->findAll();
+        $this->db->where('id_ujian', $id);
+        $nilai = $this->db->get('user_nilai')->result_array;
+
+        // Create a new Spreadsheet object
+
+        $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet;
+        $sheet = $spreadsheet->getActiveSheet();
+        // Set the active sheet
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Add headers to the first row
+        $sheet->setCellValue('A1', 'Nama');
+        $sheet->setCellValue('B1', 'NIM');
+        $sheet->setCellValue('C1', 'Nilai');
+        $sheet->setCellValue('D1', 'Tanggal');
+
+        // Iterate over the results and add them to the spreadsheet
+        $row = 2;
+        foreach ($nilai as $result) {
+            $user = $this->UsersModel->GetUser($result['id_users']);
+            $nama_user = $user['fullname'];
+            $username_user = $user['username'];
+            $sheet->setCellValue('A' . $row, $nama_user);
+            $sheet->setCellValue('B' . $row, $username_user);
+            $sheet->setCellValue('C' . $row, $result['nilai']);
+            $sheet->setCellValue('D' . $row, $result['updated_at']);
+            $row++;
+        }
+
+        // Create a new Excel file writer
+        $writer = new Xlsx($spreadsheet);
+
+        // Set the appropriate headers for the response
+        $fileName = 'hasil_ujian_' . $stringWithUnderscores . '.xlsx';
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $fileName . '"');
+        header('Cache-Control: max-age=0');
+
+        // Save the spreadsheet file to the response output
+        $writer->save('php://output');
+        die;
     }
 }

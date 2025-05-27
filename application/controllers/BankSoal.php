@@ -142,4 +142,8 @@ class BankSoal extends CI_Controller
         $this->session->set_flashdata('pesan_bab', 'Bab berhasil diubah');
         redirect('/bankSoal/' . $id_mata_kuliah);
     }
+
+    public function tambahMataKuliah(){
+        $this->load->view('bankSoal/dosen/mata_kuliah/tambahMataKuliah');
+    }
 }
