@@ -65,16 +65,16 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                <form>
+                                <form action="/bank-soal-ci3/index.php/banksoal/mata_kuliah/simpan_mata_kuliah" method="post">
                                     <div class="mb-3">
                                         <label for="kodeMatkul" class="form-label">Kode Mata Kuliah</label>
-                                        <input type="text" class="form-control" id="kodeMatkul" placeholder="Contoh: MK001" required>
+                                        <input type="text" class="form-control" id="kode_mata_kuliah" name="kode_mata_kuliah" placeholder="Contoh: MK001" required>
                                         <div class="form-text">Masukkan kode mata kuliah (3 huruf dan 3 angka)</div>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="namaMatkul" class="form-label">Nama Mata Kuliah</label>
-                                        <input type="text" class="form-control" id="namaMatkul" placeholder="Contoh: Pemrograman Web" required>
+                                        <input type="text" class="form-control" id="nama_mata_kuliah" name="nama_mata_kuliah" placeholder="Contoh: Pemrograman Web" required>
                                     </div>
 
                                     <div class="mb-3">
@@ -105,12 +105,12 @@
 
                                     <div class="mb-3">
                                         <label for="deskripsi" class="form-label">Deskripsi Mata Kuliah</label>
-                                        <textarea class="form-control" id="deskripsi" rows="3" placeholder="Masukkan deskripsi singkat mata kuliah"></textarea>
+                                        <textarea required class="form-control" id="deskripsi" rows="3" placeholder="Masukkan deskripsi singkat mata kuliah"></textarea>
                                     </div>
 
                                     <div class="d-grid gap-2">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                        <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                                        <button type="submit" class="btn btn-primary w-50 mx-auto">Simpan</button>
+                                        <!-- <button type="reset" class="btn btn-outline-secondary">Reset</button> -->
                                     </div>
                                 </form>
                             </div>

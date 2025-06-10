@@ -13,12 +13,35 @@ class MataKuliahModel extends CI_Model
     {
         $this->load->database();
         if ($id == false) {
-            $query= $this->db->get('mata_kuliah');
+            $query = $this->db->get('mata_kuliah');
             return $query->result_array();
         }
 
         $this->db->where('id', $id);
         $query = $this->db->get('mata_kuliah');
         return $query->result_array();
+    }
+
+    public function insert($data)
+    {
+        $this->load->database();
+        if (empty($data)) {
+            return false;
+        }
+        $insert = $this->db->insert('mata_kuliah', $data);
+        return $insert;
+    }
+
+    // $this->load->database();
+    //     $this->db->where('id', $id);
+    //     return $this->db->delete('bab');
+
+    public function delete($id) {
+        $this->load->database();
+        if (empty($id)) {
+            return false;
+        }
+        $this->db->where('id',$id);
+        return $this->db->delete('mata_kuliah');
     }
 }

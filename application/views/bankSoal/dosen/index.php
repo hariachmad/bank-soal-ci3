@@ -67,6 +67,11 @@
             </nav>
             <div class="container-fluid"></div>
             <div class="container">
+                <?php if ($this->session->flashdata('pesan')): ?>
+                    <div class="alert alert-success" role="alert">
+                        <?= $this->session->flashdata('pesan'); ?>
+                    </div>
+                <?php endif; ?>
                 <div class="row">
                     <div class="col">
                         <h2 class="mt-2">Bank Soal</h2>
@@ -77,7 +82,11 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><?= $k['nama_mata_kuliah'] ?></h5>
                                         <p class="card-text"><?= $k['kode_mata_kuliah'] ?></p>
-                                        <a href="/bank-soal-ci3/index.php/bankSoal/<?= $k['id']; ?>" class="btn btn-primary">Detail</a>
+                                        <div class="d-flex gap-1 justify-content-center">
+                                            <a href="/bank-soal-ci3/index.php/bankSoal/<?= $k['id']; ?>" class="btn btn-primary">Detail</a>
+                                            <a href="/bank-soal-ci3/index.php/banksoal/mata_kuliah/<?= $k['id']; ?>/hapus_mata_kuliah" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                                        </div>
+
                                     </div>
                                 </div>
                             <?php endforeach; ?>
