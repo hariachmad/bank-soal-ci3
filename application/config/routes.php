@@ -79,6 +79,8 @@ $route['banksoal/mahasiswa']='Mahasiswa/masukUjian';
 $route['banksoal/ujian/mendaftar_ujian']='Mahasiswa/mendaftarUjian';
 $route['banksoal/mata_kuliah/tambah_mata_kuliah']='BankSoal/tambahMataKuliah';
 $route['banksoal/mata_kuliah/simpan_mata_kuliah']='MataKuliah/simpanMataKuliah';
+$route['banksoal/hasil_ujian']='Ujian/hasilUjian';
+// banksoal/hasil_ujian
 $route['banksoal/mata_kuliah/(:num)/hapus_mata_kuliah']='MataKuliah/deleteMataKuliah/$1';
 $route['ujian/detail_ujian/(:num)']='Mahasiswa/detailUjian/$1';
 $route['ujian/mulai_ujian/(:num)']='Mahasiswa/mulaiUjian/$1';

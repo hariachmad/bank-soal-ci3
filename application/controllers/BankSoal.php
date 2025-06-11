@@ -146,4 +146,8 @@ class BankSoal extends CI_Controller
     public function tambahMataKuliah(){
         $this->load->view('bankSoal/dosen/mata_kuliah/tambahMataKuliah');
     }
+
+    public function hasilUjian(){
+        $this->load->view('bankSoal/dosen/ujian/hasilUjian');
+    }
 }

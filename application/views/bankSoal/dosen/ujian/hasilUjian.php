@@ -38,16 +38,6 @@
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
             </div>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal/mata_kuliah/tambah_mata_kuliah"><img
-                        src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
-                        style="width: 30px;"><span class="ms-2 fs-8">Tambah Mata-Kuliah</span></a>
-            </div>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal/hasil_ujian"><img
-                        src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
-                        style="width: 30px;"><span class="ms-2 fs-8">Hasil Ujian</span></a>
-            </div>
         </div>
         <div id="page-content-wrapper" style="background-color: #f4f6f9;">
             <nav class="navbar navbar-expand-lg navbar-dark border-bottom" style="background-color: #dc3545;">
@@ -58,7 +48,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#" style="line-height: 0.8em;">
                                     <small><span
-                                            class="text-uppercase"><?= $session["fullname"]; ?></span></small><br>
+                                            class="text-uppercase"><?= $this->session->userdata("fullname") ?></span></small><br>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" id="absolute">
                                     <a href="<?= site_url("logout") ?>" class="dropdown-item">
@@ -70,37 +60,39 @@
                     </div>
                 </div>
             </nav>
-            <div class="container-fluid"></div>
-            <div class="container">
-                <?php if ($this->session->flashdata('pesan')): ?>
-                    <div class="alert alert-success" role="alert">
-                        <?= $this->session->flashdata('pesan'); ?>
-                    </div>
-                <?php endif; ?>
-                <div class="row">
-                    <div class="col">
-                        <h2 class="mt-2">Bank Soal</h2>
-                        </br></br>
-                        <div class="col d-flex justify-content-center">
-                            <?php foreach ($mataKuliah as $k): ?>
-                                <div class="card text-center" style="width: 18rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?= $k['nama_mata_kuliah'] ?></h5>
-                                        <p class="card-text"><?= $k['kode_mata_kuliah'] ?></p>
-                                        <div class="d-flex gap-1 justify-content-center">
-                                            <a href="/bank-soal-ci3/index.php/bankSoal/<?= $k['id']; ?>" class="btn btn-primary">Detail</a>
-                                            <a href="/bank-soal-ci3/index.php/banksoal/mata_kuliah/<?= $k['id']; ?>/hapus_mata_kuliah" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
-                                        </div>
+            <div class="container-fluid">
+                <table class="table table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>Mata Kuliah</th>
+                            <th>Nilai Minimum</th>
+                            <th>NIK</th>
+                            <th>Nama Mahasiswa</th>
+                            <th>Nilai</th>
+                            <th>Tanggal</th>
+                            <th>Lulus</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                                    </div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                </div>
+                        <?php foreach ($hasil_ujian as $ujian): ?>
+                            <tr>
+
+                                <th><?php echo $ujian["nama_mata_kuliah"] ?></th>
+                                <th><?php echo $ujian["nilai_minimum_kelulusan"] ?></th>
+                                <th><?php echo $ujian["id_users"] ?></th>
+                                <th><?php echo $ujian["fullname"] ?></th>
+                                <th><?php echo $ujian["nilai"] ?></th>
+                                <th><?php echo $ujian["tanggal"] ?></th>
+                                <th><?php echo 
+                                    $ujian["nilai_minimum_kelulusan"] <= $ujian["nilai"] ? "LULUS" : "TIDAK"
+                                ?></th>
+                            </tr>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
     </div>
     <script>
         window.addEventListener('DOMContentLoaded', event => {

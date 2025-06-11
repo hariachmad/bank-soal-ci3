@@ -169,12 +169,12 @@
                     var generateButton = document.getElementById('generateButton');
 
                     if (generateButton) {
-                        generateButton.addEventListener('click', function () {
+                        generateButton.addEventListener('click', function() {
                             var randomCode = generateRandomCode();
                             document.getElementById('codeCell').textContent = randomCode;
                             // Send an AJAX request to save the code
                             var xhttp = new XMLHttpRequest();
-                            xhttp.onreadystatechange = function () {
+                            xhttp.onreadystatechange = function() {
                                 if (this.readyState == 4 && this.status == 200) {
                                     // Code successfully saved
                                     console.log('Code saved:', randomCode);
@@ -186,16 +186,18 @@
                         });
                     }
 
-                    document.getElementById('exportExcel').addEventListener('click', function () {
+                    document.getElementById('exportExcel').addEventListener('click', function() {
                         // Send an AJAX request to save the code
                         var xhttp = new XMLHttpRequest();
                         xhttp.responseType = 'blob';
                         xhttp.open('POST', 'http://localhost:4000/export-excel', true);
                         xhttp.setRequestHeader('Content-type', 'application/json');
-                        xhttp.onreadystatechange = function () {
+                        xhttp.onreadystatechange = function() {
                             if (this.readyState == 4 && this.status == 200) {
                                 console.log('Excel exported');
-                                const blob = new Blob([this.response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                                const blob = new Blob([this.response], {
+                                    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                });
                                 const downloadUrl = URL.createObjectURL(blob);
                                 const a = document.createElement('a');
                                 a.href = downloadUrl;
@@ -218,7 +220,7 @@
                                 console.error("Gagal mengirim request. Status:", this.status);
                             }
                         };
-                        
+
                         xhttp.send(JSON.stringify({
                             id: <?= $ujian['id']; ?>
                         }));

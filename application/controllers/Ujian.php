@@ -311,4 +311,12 @@ class Ujian extends CI_Controller
         $writer->save('php://output');
         die;
     }
+
+    public function hasilUjian(){
+        $this->load->model('UjianModel');
+        $data =[
+            'hasil_ujian' => $this->UjianModel->hasilUjian()
+        ];
+        $this->load->view('banksoal/dosen/ujian/hasilUjian', $data);
+    }
 }
