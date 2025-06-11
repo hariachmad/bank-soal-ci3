@@ -44,7 +44,7 @@
                         style="width: 30px;"><span class="ms-2 fs-8">Tambah Mata-Kuliah</span></a>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal/hasil_ujian"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal/form_hasil_ujian"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Hasil Ujian</span></a>
             </div>

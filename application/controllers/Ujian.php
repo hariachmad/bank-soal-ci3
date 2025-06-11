@@ -314,9 +314,27 @@ class Ujian extends CI_Controller
 
     public function hasilUjian(){
         $this->load->model('UjianModel');
-        $data =[
-            'hasil_ujian' => $this->UjianModel->hasilUjian()
+        $payload = [
+            'mata_kuliah' => $this->input->post('mata_kuliah'),
+            'id_user' => $this->input->post('id_user'),
+            'kode_ujian' => $this->input->post('kode_ujian')
         ];
-        $this->load->view('banksoal/dosen/ujian/hasilUjian', $data);
+        $data =[
+            'hasil_ujian' => $this->UjianModel->hasilUjian($payload)
+        ];
+        $this->load->view('banksoal/dosen/ujian/HasilUjian', $data);
+    }
+
+    public function formHasilUjian(){
+        $this->load->model('UjianModel');
+        $payload = [
+            'mata_kuliah' => '',
+            'id_user' => '',
+            'kode_ujian' => ''
+        ];
+        $data =[
+            'hasil_ujian' => $this->UjianModel->hasilUjian($payload)
+        ];
+        $this->load->view('banksoal/dosen/ujian/formHasilUjian', $data);
     }
 }

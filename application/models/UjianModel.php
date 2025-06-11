@@ -57,12 +57,12 @@ class UjianModel extends CI_Model
         return $query->result_array();
     }
 
-    public function hasilUjian()
+    public function hasilUjian($payload)
     {
         $this->load->database();
-        $sql = "select D.*, un.nilai, un.created_at as tanggal from (select C.nama_mata_kuliah,C.nilai_minimum_kelulusan,C.id_ujian,us.id as id_users, us.fullname from (select B.nama_mata_kuliah,B.nilai_minimum_kelulusan,B.id_ujian,ku.id_users from 
+        $sql = "select F.* from (select E.* from(select D.*, un.nilai, un.created_at as tanggal from (select C.nama_mata_kuliah,C.nilai_minimum_kelulusan,C.id_ujian,C.kode_ujian,us.id as id_users, us.fullname from (select B.nama_mata_kuliah,B.nilai_minimum_kelulusan,B.kode_ujian,B.id_ujian,ku.id_users from 
 (select A.nama_mata_kuliah,A.nilai_minimum_kelulusan,k.kode_ujian,k.id_ujian from 
-(select m.nama_mata_kuliah,u.nilai_minimum_kelulusan,u.id from mata_kuliah m LEFT join ujian u on m.id = u.id_mata_kuliah) as A LEFT JOIN (select AA.*, ko.kode_ujian from (select MAX(id) as id,id_ujian from kode_ujian GROUP BY id_ujian) as AA join kode_ujian ko on AA.id = ko.id) k on k.id_ujian = A.id) as B LEFT Join kode_users ku on B.kode_ujian = ku.kode_ujian) as C LEFT JOIN users us on C.id_users = us.id) as D LEFT JOIN user_nilai un on D.id_ujian = un.id_ujian and D.id_users = un.id_users";
+(select m.nama_mata_kuliah,u.nilai_minimum_kelulusan,u.id from mata_kuliah m LEFT join ujian u on m.id = u.id_mata_kuliah) as A LEFT JOIN (select AA.*, ko.kode_ujian from (select MAX(id) as id,id_ujian from kode_ujian GROUP BY id_ujian) as AA join kode_ujian ko on AA.id = ko.id) k on k.id_ujian = A.id) as B LEFT Join kode_users ku on B.kode_ujian = ku.kode_ujian) as C LEFT JOIN users us on C.id_users = us.id) as D LEFT JOIN user_nilai un on D.id_ujian = un.id_ujian and D.id_users = un.id_users where D.nama_mata_kuliah = '".$payload["mata_kuliah"] ."' or '".$payload["mata_kuliah"]."' = '') as E where E.id_users = '".$payload["id_user"]."' or '".$payload["id_user"]."' = '') as F where F.kode_ujian = '".$payload["kode_ujian"]."' or '".$payload["kode_ujian"]."' = ''";
         $query = $this->db->query($sql);
         $result = $query->result_array();
         return $result;

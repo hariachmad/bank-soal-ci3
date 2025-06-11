@@ -65,6 +65,7 @@
                     <thead>
                         <tr>
                             <th>Mata Kuliah</th>
+                            <th>Kode Ujian</th>
                             <th>Nilai Minimum</th>
                             <th>NIK</th>
                             <th>Nama Mahasiswa</th>
@@ -79,6 +80,7 @@
                             <tr>
 
                                 <th><?php echo $ujian["nama_mata_kuliah"] ?></th>
+                                <th><?php echo $ujian["kode_ujian"] ?></th>
                                 <th><?php echo $ujian["nilai_minimum_kelulusan"] ?></th>
                                 <th><?php echo $ujian["id_users"] ?></th>
                                 <th><?php echo $ujian["fullname"] ?></th>
@@ -91,21 +93,4 @@
                         <?php endforeach ?>
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    <script>
-        window.addEventListener('DOMContentLoaded', event => {
-            const sidebarToggle = document.body.querySelector('#sidebarToggle');
-            if (sidebarToggle) {
-                sidebarToggle.addEventListener('click', event => {
-                    event.preventDefault();
-                    document.body.classList.toggle('sb-sidenav-toggled');
-                    localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
-                });
-            }
-        });
-    </script>
-</body>
-
-</html>
+             
