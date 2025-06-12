@@ -3,6 +3,9 @@ const ExcelJS = require("exceljs");
 const mysql = require("mysql2");
 const router = express.Router();
 const app = express();
+const cors = require('cors');
+
+app.use(cors());
 
 const connection = mysql.createConnection({
 	host: "localhost",
