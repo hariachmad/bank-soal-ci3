@@ -69,7 +69,7 @@
                             <a class="btn btn-primary"
                                 href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/">Kembali ke Halaman
                                 Sebelumnya</a><br><br>
-                            <a id="exportExcel" class="btn btn-success" href="#" role="button">Export Nilai ke Excel</a>
+                            <!-- <a id="exportExcel" class="btn btn-success" href="#" role="button">Export Nilai ke Excel</a> -->
                             <table class="table">
                                 <thead>
                                     <tr>

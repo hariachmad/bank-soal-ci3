@@ -67,7 +67,7 @@
                             <th>Mata Kuliah</th>
                             <th>Kode Ujian</th>
                             <th>Nilai Minimum</th>
-                            <th>NIK</th>
+                            <th>NIM</th>
                             <th>Nama Mahasiswa</th>
                             <th>Nilai</th>
                             <th>Tanggal</th>
@@ -86,8 +86,12 @@
                                 <th><?php echo $ujian["fullname"] ?></th>
                                 <th><?php echo $ujian["nilai"] ?></th>
                                 <th><?php echo $ujian["tanggal"] ?></th>
-                                <th><?php echo 
-                                    $ujian["nilai_minimum_kelulusan"] <= $ujian["nilai"] ? "LULUS" : "TIDAK"
+                                <th><?php  
+                                    if($ujian["nilai_minimum_kelulusan"] == "" ){
+                                        echo "";
+                                    }else{
+                                        echo $ujian["nilai_minimum_kelulusan"] <= $ujian["nilai"] ? "LULUS" : "TIDAK";
+                                    }
                                 ?></th>
                             </tr>
                         <?php endforeach ?>
