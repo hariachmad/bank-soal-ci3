@@ -32,12 +32,18 @@ class AuthController extends CI_Controller
         $this->load->model('UsersModel');
         $register = $this->input->post("register");
         if ($register) {
+            $id = $this->input->post("id");
             $email = $this->input->post("email");
             $fullname = $this->input->post("fullname");
             $username = $this->input->post("username");
             $password = $this->input->post("password");
             $pass_confirm = $this->input->post("pass_confirm");
             $roles = $this->input->post("roles");
+
+            if ($id == '') {
+                $this->session->set_flashdata('errors.id', "Silahkan masukan kembali NIM");
+                redirect("register");
+            }
 
             if ($fullname == '') {
                 $this->session->set_flashdata('errors.fullname', "Silahkan masukan kembali Fullname");

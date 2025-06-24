@@ -53,8 +53,11 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-$route['login'] = 'AuthController/login';
-$route['logout'] = 'AuthController/logout';
+$route['mahasiswa'] = 'Mahasiswa/masukUjian';
+// $route['login'] = 'AuthController/login';
+// $route['logout'] = 'AuthController/logout';
+$route['login'] = 'Mahasiswa/masukUjian';
+$route['logout'] = 'Mahasiswa/masukUjian';
 $route['register'] = 'AuthController/register';
 $route['banksoal'] = 'BankSoal/index';
 $route['bankSoal/(:num)'] = 'BankSoal/daftarBab/$1';

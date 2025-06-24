@@ -88,7 +88,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Tambah Ujian</button>
+                                <button type="submit" class="btn btn-primary mb-3">Tambah Ujian</button>
+                                <p><a href="<?= site_url('register') ?>">Daftarkan NIM</a></p>
                             </form>
                         </div>
                     </div>

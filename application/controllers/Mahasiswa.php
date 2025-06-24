@@ -55,8 +55,10 @@ class Mahasiswa extends CI_Controller
     public function mendaftarUjian()
     {
         $kodeUjian = $this->input->post('kode_ujian');
+        $nim = $this->input->post('nim');
         $this->load->model('KodeUjianModel');
         $this->load->model('KodeUsersModel');
+        $this->load->model('UsersModel');
         // if (!$this->validate([
         //     'kode_ujian' => [
         //         'rules' => 'required',
@@ -69,13 +71,21 @@ class Mahasiswa extends CI_Controller
         //     return redirect()->to('/ujian/masuk_ujian')->withInput();
         // }
         if ($this->KodeUjianModel->getKodeUjian($kodeUjian)) {
-            if (!$this->KodeUsersModel->getKodeUsersId($this->session->userdata('id'), $kodeUjian)) {
+            if (!$this->KodeUsersModel->getKodeUsersId($nim, $kodeUjian)) {
                 $this->KodeUsersModel->insert([
-                    'id_users' => $this->session->userdata('id'),
+                    'id_users' => $nim,
                     'kode_ujian' => $kodeUjian,
                 ]);
             }
-            $kodeUsers = $this->KodeUsersModel->getKodeUsersId($this->session->userdata('id'), $kodeUjian);
+            $data = $this->UsersModel->getUser($nim);
+            $this->session->set_userdata(
+                    [
+                        "fullname" => $data["fullname"],
+                        "role" => $data["role"],
+                        "id" => $data["id"]
+                    ]
+                );
+            $kodeUsers = $this->KodeUsersModel->getKodeUsersId($nim, $kodeUjian);
             redirect('/ujian/detail_ujian/' . $kodeUsers);
         } else {
             // $validation = \Config\Services::validation();
