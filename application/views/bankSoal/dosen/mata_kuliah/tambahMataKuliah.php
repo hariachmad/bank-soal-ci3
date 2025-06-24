@@ -85,6 +85,10 @@
                                             <option value="2">2 SKS</option>
                                             <option value="3">3 SKS</option>
                                             <option value="4">4 SKS</option>
+                                            <option value="4">5 SKS</option>
+                                            <option value="4">6 SKS</option>
+                                            <option value="4">7 SKS</option>
+                                            <option value="4">8 SKS</option>
                                         </select>
                                     </div>
 

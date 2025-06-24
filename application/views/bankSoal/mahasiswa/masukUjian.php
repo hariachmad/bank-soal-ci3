@@ -42,7 +42,7 @@
             <nav class="navbar navbar-expand-lg navbar-dark border-bottom" style="background-color: #dc3545;">
                 <div class="container-fluid">
                     <button id="sidebarToggle" style="background-color: #dc3545; color: #fff; border: none">☰</button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0 ml-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#" style="line-height: 0.8em;">
@@ -56,7 +56,7 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
             </nav>
             <div class="container-fluid">
@@ -66,6 +66,17 @@
                             <h2 class="my-3">Masuk Ujian</h2>
                             <br>
                             <form action="/bank-soal-ci3/index.php/banksoal/ujian/mendaftar_ujian" method="post">
+                                <div class="row mb-3">
+                                    <label for="NIM" class="col-sm-2 col-form-label">NIM : </label>
+                                    <div class="col-sm-4">
+                                        <input type="text"
+                                            class="form-control form-control-lg <?= (form_error('nim')) ? 'is-invalid' : ''; ?> "
+                                            id="nim" name="nim" value="<?= set_value('nim'); ?>">
+                                        <div class="invalid-feedback">
+                                            <?= form_error('nim'); ?>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row mb-3">
                                     <label for="kode_ujian" class="col-sm-2 col-form-label">Kode Ujian</label>
                                     <div class="col-sm-4">
