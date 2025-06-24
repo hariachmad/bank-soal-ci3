@@ -76,9 +76,10 @@
                         <div class="row mb-3">
                             <label for="soal" class="col-sm-2 col-form-label">Soal</label>
                             <div class="col-sm-10">
-                                <textarea
+                                <textarea contenteditable="true"
                                     class="summernote form-control <?= (form_error('soal')) ? 'is-invalid' : ''; ?> "
-                                    id="soal" name="soal"><?= set_value('soal'); ?></textarea>
+                                    id="soal" name="soal"><?= set_value('soal'); ?>
+                                </textarea>
                                 <div class="invalid-feedback">
                                     <?= form_error('soal'); ?>
                                 </div>
@@ -148,22 +149,22 @@
             </div>
 
             <script>
-                $(document).ready(function () {
-                    $('.summernote').each(function () {
+                $(document).ready(function() {
+                    $('.summernote').each(function() {
                         var elementId = $(this).attr('id');
                         var height = (elementId === 'soal') ? 300 : null;
 
                         $(this).summernote({
                             callbacks: {
-                                onImageUpload: function (files) {
+                                onImageUpload: function(files) {
                                     for (let i = 0; i < files.length; i++) {
                                         $.upload(files[i]);
                                     }
                                 },
-                                onMediaDelete: function (target) {
+                                onMediaDelete: function(target) {
                                     $.delete(target[0].src);
                                 },
-                                onPaste: function (e) {
+                                onPaste: function(e) {
                                     var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
                                     e.preventDefault();
                                     document.execCommand('insertText', false, bufferText);
@@ -174,7 +175,7 @@
                         });
                     });
                 });
-                $.upload = function (file) {
+                $.upload = function(file) {
                     let out = new FormData();
                     out.append('file', file, file.name);
                     $.ajax({
@@ -184,16 +185,16 @@
                         cache: false,
                         processData: false,
                         data: out,
-                        success: function (url) {
+                        success: function(url) {
                             let html = $('.summernote').summernote('code');
                             $('.summernote').summernote('code', html + '<img src="' + url + '"/>');
                         },
-                        error: function (jqXHR, textStatus, errorThrown) {
+                        error: function(jqXHR, textStatus, errorThrown) {
                             console.error(textStatus + " " + errorThrown);
                         }
                     });
                 };
-                $.delete = function (src) {
+                $.delete = function(src) {
                     $.ajax({
                         method: 'POST',
                         url: '<?php echo site_url('banksoal/delete_gambar') ?>',
@@ -201,7 +202,7 @@
                         data: {
                             src: src
                         },
-                        success: function (response) {
+                        success: function(response) {
                             console.log(response);
                         }
 
