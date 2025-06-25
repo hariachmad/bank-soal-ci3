@@ -176,6 +176,7 @@
                     });
                 });
                 $.upload = function(file) {
+                    console.log(file);
                     let out = new FormData();
                     out.append('file', file, file.name);
                     $.ajax({
@@ -190,7 +191,7 @@
                             $('.summernote').summernote('code', html + '<img src="' + url + '"/>');
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-                            console.error(textStatus + " " + errorThrown);
+                            console.error("error"+ textStatus + " " + errorThrown);
                         }
                     });
                 };

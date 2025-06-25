@@ -157,11 +157,30 @@ class Soal extends CI_Controller
 
     function uploadGambar()
     {
-        if ($this->request->getFile('file')) {
-            $dataFile = $this->request->getFile('file');
-            $fileName = $dataFile->getRandomName();
-            $dataFile->move("uploads/berkas/", $fileName);
-            echo base_url("uploads/berkas/$fileName");
+        // if ($this->request->getFile('file')) {
+        // $dataFile = $this->request->getFile('file');
+        // $fileName = $dataFile->getRandomName();
+        // $dataFile->move("uploads/berkas/", $fileName);
+        // echo base_url("uploads/berkas/$fileName");
+        //     echo "success";
+        // }
+
+        $this->load->library('upload');
+
+        $config['upload_path'] = './uploads/berkas/';
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size'] = 2048;
+        $config['encrypt_name'] = TRUE;
+
+        $this->upload->initialize($config);
+
+        if ($this->upload->do_upload('file')) {
+            $data = $this->upload->data();
+            $file_url = base_url('uploads/berkas/' . $data['file_name']);
+            echo $file_url;
+        } else {
+            $error = $this->upload->display_errors();
+            echo $error;
         }
     }
 
