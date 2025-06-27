@@ -77,55 +77,40 @@
                             <label for="soal" class="col-sm-2 col-form-label">Soal</label>
                             <div class="col-sm-10">
                                 <textarea
-                                    class="summernote form-control <?= (form_error('soal')) ? 'is-invalid' : ''; ?> "
+                                    class="summernote form-control "
                                     id="soal" name="soal"><?= $soal['soal']; ?></textarea>
-                                <div class="invalid-feedback">
-                                    <?= form_error('soal'); ?>
-                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="jawaban_a" class="col-sm-2 col-form-label">Jawaban A</label>
                             <div class="col-sm-10">
                                 <textarea
-                                    class="summernote form-control <?= (form_error('jawaban_a')) ? 'is-invalid' : ''; ?> "
+                                    class="summernote form-control "
                                     id="jawaban_a" name="jawaban_a"><?= $soal['jawaban_a']; ?></textarea>
-                                <div class="invalid-feedback">
-                                    <?= form_error('jawaban_a'); ?>
-                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="jawaban_b" class="col-sm-2 col-form-label">Jawaban B</label>
                             <div class="col-sm-10">
                                 <textarea
-                                    class="summernote form-control <?= (form_error('jawaban_b')) ? 'is-invalid' : ''; ?> "
+                                    class="summernote form-control "
                                     id="jawaban_b" name="jawaban_b"><?= $soal['jawaban_b']; ?></textarea>
-                                <div class="invalid-feedback">
-                                    <?= form_error('jawaban_b'); ?>
-                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="jawaban_c" class="col-sm-2 col-form-label">Jawaban C</label>
                             <div class="col-sm-10">
                                 <textarea
-                                    class="summernote form-control <?= (form_error('jawaban_c')) ? 'is-invalid' : ''; ?> "
+                                    class="summernote form-control  "
                                     id="jawaban_c" name="jawaban_c"><?= $soal['jawaban_c']; ?></textarea>
-                                <div class="invalid-feedback">
-                                    <?= form_error('jawaban_c'); ?>
-                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="jawaban_d" class="col-sm-2 col-form-label">Jawaban D</label>
                             <div class="col-sm-10">
                                 <textarea
-                                    class="summernote form-control <?= (form_error('jawaban_d')) ? 'is-invalid' : ''; ?> "
+                                    class="summernote form-control  "
                                     id="jawaban_d" name="jawaban_d"><?= $soal['jawaban_d']; ?></textarea>
-                                <div class="invalid-feedback">
-                                    <?= form_error('jawaban_d'); ?>
-                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
