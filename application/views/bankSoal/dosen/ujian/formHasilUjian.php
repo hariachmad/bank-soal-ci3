@@ -47,8 +47,8 @@
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0 ml-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#" style="line-height: 0.8em;">
-                                    <small><span
-                                            class="text-uppercase"><?= $this->session->userdata("fullname") ?></span></small><br>
+                                    <!-- <small><span
+                                            class="text-uppercase"><?= $this->session->userdata("fullname") ?></span></small><br> -->
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" id="absolute">
                                     <a href="<?= site_url("logout") ?>" class="dropdown-item">
@@ -86,12 +86,12 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="id_user" class="form-label">ID :</label>
-                                        <select class="form-select" id="id_user" name="id_user" required>
+                                        <label for="id_user" class="form-label">NIM :</label>
+                                        <select class="form-select" id="username" name="username" required>
                                             <option value="" disabled>Pilih ID Mahasiswa</option>
                                             <option value="" selected>ALL</option>
                                             <?php foreach ($hasil_ujian as $ujian): ?>
-                                                <option value="<?php echo $ujian["id_users"] ?>"> <?php echo $ujian["id_users"] ?></option>
+                                                <option value="<?php echo $ujian["username"] ?>"> <?php echo $ujian["username"] ?></option>
                                             <?php endforeach ?>
                                         </select>
                                     </div>

@@ -59,6 +59,7 @@ class Mahasiswa extends CI_Controller
         $this->load->model('KodeUjianModel');
         $this->load->model('KodeUsersModel');
         $this->load->model('UsersModel');
+        $data = $this->UsersModel->getUserByUsername($nim);
         // if (!$this->validate([
         //     'kode_ujian' => [
         //         'rules' => 'required',
@@ -71,13 +72,13 @@ class Mahasiswa extends CI_Controller
         //     return redirect()->to('/ujian/masuk_ujian')->withInput();
         // }
         if ($this->KodeUjianModel->getKodeUjian($kodeUjian)) {
-            if (!$this->KodeUsersModel->getKodeUsersId($nim, $kodeUjian)) {
+            if (!$this->KodeUsersModel->getKodeUsersId($data["id"], $kodeUjian)) {
                 $this->KodeUsersModel->insert([
-                    'id_users' => $nim,
+                    'id_users' => $data["id"],
                     'kode_ujian' => $kodeUjian,
                 ]);
             }
-            $data = $this->UsersModel->getUser($nim);
+            
             $this->session->set_userdata(
                     [
                         "fullname" => $data["fullname"],
@@ -85,7 +86,7 @@ class Mahasiswa extends CI_Controller
                         "id" => $data["id"]
                     ]
                 );
-            $kodeUsers = $this->KodeUsersModel->getKodeUsersId($nim, $kodeUjian);
+            $kodeUsers = $this->KodeUsersModel->getKodeUsersId($data["id"], $kodeUjian);
             redirect('/ujian/detail_ujian/' . $kodeUsers);
         } else {
             // $validation = \Config\Services::validation();

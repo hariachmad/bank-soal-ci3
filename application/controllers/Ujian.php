@@ -314,9 +314,12 @@ class Ujian extends CI_Controller
 
     public function hasilUjian(){
         $this->load->model('UjianModel');
+        $this->load->model('UsersModel');
+        $user = $this->UsersModel->getUserByUsername($this->input->post('username'));
+
         $payload = [
             'mata_kuliah' => $this->input->post('mata_kuliah'),
-            'id_user' => $this->input->post('id_user'),
+            'id_user' => $user ? $user["id"] : "",
             'kode_ujian' => $this->input->post('kode_ujian')
         ];
         $data =[

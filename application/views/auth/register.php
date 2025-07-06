@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="username">Username</label>
+                                <label for="username">NIM</label>
                                 <input type="text"
                                     class="form-control <?php if ($this->session->flashdata('errors.username')): ?>is-invalid<?php endif ?>"
                                     name="username" placeholder="Username" value="">

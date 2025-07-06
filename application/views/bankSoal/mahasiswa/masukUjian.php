@@ -63,6 +63,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
+                            <?php if ($this->session->flashdata('success')): ?>
+                                <div class="alert alert-success">
+                                    <?= $this->session->flashdata('success') ?>
+                                </div>
+                            <?php endif ?>
                             <h2 class="my-3">Masuk Ujian</h2>
                             <br>
                             <form action="/bank-soal-ci3/index.php/banksoal/ujian/mendaftar_ujian" method="post">

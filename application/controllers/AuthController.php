@@ -17,7 +17,7 @@ class AuthController extends CI_Controller
 
     public function logout()
     {
-        $this->load->view("auth/login");   
+        $this->load->view("auth/login");
     }
 
     public function viewRegister()
@@ -32,7 +32,7 @@ class AuthController extends CI_Controller
         $this->load->model('UsersModel');
         $register = $this->input->post("register");
         if ($register) {
-            $id = $this->input->post("id");
+            // $id = $this->input->post("id");
             $email = $this->input->post("email");
             $fullname = $this->input->post("fullname");
             $username = $this->input->post("username");
@@ -40,10 +40,10 @@ class AuthController extends CI_Controller
             $pass_confirm = $this->input->post("pass_confirm");
             $roles = $this->input->post("roles");
 
-            if ($id == '') {
-                $this->session->set_flashdata('errors.id', "Silahkan masukan kembali NIM");
-                redirect("register");
-            }
+            // if ($id == '') {
+            //     $this->session->set_flashdata('errors.id', "Silahkan masukan kembali NIM");
+            //     redirect("register");
+            // }
 
             if ($fullname == '') {
                 $this->session->set_flashdata('errors.fullname', "Silahkan masukan kembali Fullname");
@@ -97,6 +97,8 @@ class AuthController extends CI_Controller
                 'role' => $roles
             ];
 
+            
+
             if ($this->AuthModel->registerUser($data)) {
                 $this->UsersModel->registerUser($users);
                 $this->session->set_flashdata('success', "Registrasi berhasil! Silakan login.");
@@ -105,8 +107,6 @@ class AuthController extends CI_Controller
                 $this->session->set_flashdata('errors', "Gagal melakukan registrasi");
                 redirect('register');
             }
-
-
         }
         $this->load->view("auth/register");
     }
@@ -136,7 +136,7 @@ class AuthController extends CI_Controller
             }
 
             if ($this->AuthModel->verifyPassword($username, $password)) {
-                
+
                 $data = $this->UsersModel->getUserByUsername($username);
                 $this->session->set_userdata(
                     [
@@ -145,7 +145,7 @@ class AuthController extends CI_Controller
                         "id" => $data["id"]
                     ]
                 );
-                
+
                 // return redirect()->to('bankSoal');
                 $this->redirectBasedOnRole($data["role"]);
             }
