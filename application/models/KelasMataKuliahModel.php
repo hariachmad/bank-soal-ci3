@@ -5,6 +5,19 @@ class KelasMataKuliahModel extends CI_Model
     public $id_kelas;
     public $id_mata_kuliah;
 
+    public function getAll()
+    {
+        $this->load->database();
+        // return $this->db->get('kelas_matakuliah')->result();
+        $this->db->select('kelas_matakuliah.*, kelas.nama_kelas, mata_kuliah.nama_mata_kuliah,mata_kuliah.kode_mata_kuliah,mata_kuliah.sks');
+        $this->db->from('kelas_matakuliah');
+        $this->db->join('kelas', 'kelas.id_kelas = kelas_matakuliah.id_kelas');
+        $this->db->join('mata_kuliah', 'mata_kuliah.id = kelas_matakuliah.id_mata_kuliah');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
+
     public function getKelas($idMataKuliah = false)
     {
         $this->load->database();
@@ -15,6 +28,7 @@ class KelasMataKuliahModel extends CI_Model
             $this->db->join('kelas', 'kelas.id_kelas = kelas_matakuliah.id_kelas', 'left');
             $query = $this->db->get();
             $result = $query->result_array();
+            return $result;
         }
 
         $this->db->select('kelas_matakuliah.*, kelas.nama_kelas');
@@ -35,6 +49,7 @@ class KelasMataKuliahModel extends CI_Model
             $this->db->join('mata_kuliah', 'mata_kuliah.id = kelas_matakuliah.id_mata_kuliah', 'left');
             $query = $this->db->get();
             $result = $query->result_array();
+            return $result;
         }
 
         $this->db->select('kelas_matakuliah.*, mata_kuliah.nama_mata_kuliah,mata_kuliah.kode_mata_kuliah');

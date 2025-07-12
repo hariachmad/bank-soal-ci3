@@ -34,9 +34,9 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
-                        style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
+                        style="width: 30px;"><span class="ms-2 fs-8">Quiz</span></a>
             </div>
         </div>
         <div id="page-content-wrapper" style="background-color: #f4f6f9;">
@@ -65,10 +65,10 @@
                     <div class="row">
                         <div class="col">
                             <h2 class="mt-2"><?= $mataKuliah['nama_mata_kuliah'] ?></h2>
-                            <a href="/bank-soal-ci3/index.php/bankSoal" class="btn btn-primary mb-3">Kembali ke Daftar Mata Kuliah</a><br><br>
-                            <h2 class="mt-2">Daftar Ujian</h2><br>
-                            <a href="/bank-soal-ci3/index.php/bankSoal/<?= $mataKuliah['id']; ?>/tambah_ujian"
-                                class="btn btn-primary mb-3">Tambah Ujian</a><br>
+                            <a href="/bank-soal-ci3-dosen/index.php/bankSoal" class="btn btn-primary mb-3">Kembali ke Daftar Mata Kuliah</a><br><br>
+                            <h2 class="mt-2">Daftar Quiz</h2><br>
+                            <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/tambah_ujian/<?= $kelas['id_kelas']; ?>"
+                                class="btn btn-primary mb-3">Tambah Quiz</a><br>
                             <?php if ($this->session->flashdata('pesan_ujian')): ?>
                                 <div class="alert alert-success" role="alert">
                                     <?= $this->session->flashdata('pesan_ujian'); ?>
@@ -78,7 +78,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="col-9">Nama Ujian</th>
+                                        <th scope="col" class="col-9">Nama Quiz</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
@@ -87,12 +87,12 @@
                                         <?php if ($k['id_mata_kuliah'] === $mataKuliah['id']): ?>
                                             <tr>
                                                 <td><?= $k['nama_ujian'] ?></td>
-                                                <td><a href="/bank-soal-ci3/index.php/bankSoal/<?= $mataKuliah['id']; ?>/detail_ujian/<?= $k['id']; ?>"
+                                                <td><a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/detail_ujian/<?= $k['id']; ?>/<?= $k['id_kelas']; ?>"
                                                         class="btn btn-primary">Detail</a>
-                                                    <a href="/bank-soal-ci3/index.php/bankSoal/<?= $mataKuliah['id']; ?>/ubah_ujian/<?= $k['id']; ?>"
+                                                    <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/ubah_ujian/<?= $k['id']; ?>/<?= $k['id_kelas']; ?>"
                                                         class="btn btn-warning">Ubah</a>
                                                     <form
-                                                        action="/bank-soal-ci3/index.php/bankSoal/<?= $mataKuliah['id']; ?>/hapus_ujian/<?= $k['id']; ?>"
+                                                        action="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/hapus_ujian/<?= $k['id']; ?>/<?= $k['id_kelas']; ?>"
                                                         method="get" class="d-inline">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <button type="submit" class="btn btn-danger"
@@ -106,7 +106,7 @@
                             </table>
 
                             <h2 class="mt-2">Daftar Bab</h2><br>
-                            <a href="/bank-soal-ci3/index.php/bankSoal/<?= $mataKuliah['id']; ?>/tambah_bab" class="btn btn-primary mb-3">Tambah
+                            <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/tambah_bab" class="btn btn-primary mb-3">Tambah
                                 Bab</a><br>
                             <?php if ($this->session->flashdata('pesan_bab')): ?>
                                 <div class="alert alert-success" role="alert">
@@ -127,12 +127,12 @@
                                             <tr>
                                                 <th scope="row"><?= $k['nomor_bab'] ?></th>
                                                 <td><?= $k['nama_bab'] ?></td>
-                                                <td><a href="/bank-soal-ci3/index.php/bankSoal/<?= $mataKuliah['id']; ?>/bab/<?= $k['id']; ?>/"
+                                                <td><a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/bab/<?= $k['id']; ?>/"
                                                         class="btn btn-primary">Detail</a>
-                                                    <a href="/bank-soal-ci3/index.php/bankSoal/<?= $mataKuliah['id']; ?>/ubah_bab/<?= $k['id']; ?>"
+                                                    <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/ubah_bab/<?= $k['id']; ?>"
                                                         class="btn btn-warning">Ubah</a>
                                                     <form
-                                                        action="/bank-soal-ci3/index.php/bankSoal/<?= $mataKuliah['id']; ?>/hapus_bab/<?= $k['id']; ?>"
+                                                        action="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/hapus_bab/<?= $k['id']; ?>"
                                                         method="get" class="d-inline">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <button type="submit" class="btn btn-danger"

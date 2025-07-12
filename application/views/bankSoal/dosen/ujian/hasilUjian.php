@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Philosopher:regular">
     <link rel="stylesheet" href="<?= base_url("/public/styles.css") ?>">
-    <title>Hasil Ujian</title>
+    <title>Hasil Quiz</title>
 </head>
 
 <body>
@@ -34,9 +34,9 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
-                        style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
+                        style="width: 30px;"><span class="ms-2 fs-8">QUIZ</span></a>
             </div>
         </div>
         <div id="page-content-wrapper" style="background-color: #f4f6f9;">
@@ -65,7 +65,7 @@
                     <thead>
                         <tr>
                             <th>Mata Kuliah</th>
-                            <th>Kode Ujian</th>
+                            <th>Kode Quiz</th>
                             <th>Nilai Minimum</th>
                             <th>NIM</th>
                             <th>Nama Mahasiswa</th>

@@ -34,9 +34,9 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
-                        style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
+                        style="width: 30px;"><span class="ms-2 fs-8">QUIZ</span></a>
             </div>
         </div>
         <div id="page-content-wrapper" style="background-color: #f4f6f9;">
@@ -66,7 +66,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                <form action="/bank-soal-ci3/index.php/banksoal/hasil_ujian" method="post">
+                                <form action="/bank-soal-ci3-dosen/index.php/banksoal/hasil_ujian" method="post">
                                     <div class="mb-3">
                                         <label for="mata_kuliah" class="form-label">MATA KULIAH :</label>
                                         <select class="form-select" id="mata_kuliah" name="mata_kuliah" required>
@@ -97,7 +97,7 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="kode_ujian" class="form-label">KODE UJIAN :</label>
+                                        <label for="kode_ujian" class="form-label">KODE QUIZ :</label>
                                         <select class="form-select" id="kode_ujian" name="kode_ujian" required>
                                             <option value="" disabled>Pilih Kode Ujian</option>
                                             <option value="" selected>ALL</option>

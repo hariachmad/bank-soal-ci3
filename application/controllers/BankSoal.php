@@ -13,23 +13,25 @@ class BankSoal extends CI_Controller
 
     public function index()
     {
-        $this->load->model('MataKuliahModel');
+        $this->load->model('KelasMataKuliahModel');
         $data = [
             'title' => 'Bank Soal',
-            'mataKuliah' => $this->MataKuliahModel->getMataKuliah(),
+            'kelasMataKuliah' => $this->KelasMataKuliahModel->getAll(),
             'session' => ["fullname" => $this->session->userdata("fullname")],
         ];
 
         $this->load->view('bankSoal/dosen/index', $data);
     }
 
-    public function daftarBab($id)
+    public function daftarBab($id,$idKelas)
     {
         $this->load->model('MataKuliahModel');
+        $this->load->model('KelasModel');
         $this->load->model('BabModel');
         $this->load->model('UjianModel');
         $data = [
             'title' => 'Bank Soal',
+            'kelas' => $this->KelasModel->getKelas($idKelas)[0],
             'mataKuliah' => $this->MataKuliahModel->getMataKuliah($id)[0],
             'bab' => $this->BabModel->getBab(),
             'ujian' => $this->UjianModel->getUjian()

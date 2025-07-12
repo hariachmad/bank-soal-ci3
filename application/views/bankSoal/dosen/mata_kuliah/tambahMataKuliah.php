@@ -34,7 +34,7 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
             </div>
@@ -65,7 +65,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-body">
-                                <form action="/bank-soal-ci3/index.php/banksoal/mata_kuliah/simpan_mata_kuliah" method="post">
+                                <form action="/bank-soal-ci3-dosen/index.php/banksoal/mata_kuliah/simpan_mata_kuliah" method="post">
                                     <div class="mb-3">
                                         <label for="kodeMatkul" class="form-label">Kode Mata Kuliah</label>
                                         <input type="text" class="form-control" id="kode_mata_kuliah" name="kode_mata_kuliah" placeholder="Contoh: MK001" required>

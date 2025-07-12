@@ -34,7 +34,7 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
             </div>
@@ -65,9 +65,9 @@
                 <div class="row">
                     <div class="col-12">
                         <h2 class="my-3">Ubah Ujian</h2>
-                        <a class="btn btn-primary" href="/bank-soal-ci3/index.php/bankSoal/<?= $id; ?>">Kembali ke Daftar Bab</a>
+                        <a class="btn btn-primary" href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id; ?>/<?= $id_kelas; ?>">Kembali ke Daftar Bab</a>
                         <br><br>
-                        <form action="/bank-soal-ci3/index.php/bankSoal/<?= $id; ?>/update_ujian/<?= $ujian['id']; ?>" method="post">
+                        <form action="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id; ?>/update_ujian/<?= $ujian['id']; ?>/<?= $id_kelas; ?>" method="post">
                             <div class="row mb-3">
                                 <label for="nama_ujian" class="col-sm-2 col-form-label">Nama Ujian</label>
                                 <div class="col-sm-10">

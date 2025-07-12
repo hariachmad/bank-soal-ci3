@@ -64,7 +64,7 @@
     <div class="row">
         <div class="col">
             <h2 class="mt-2">BAB <?= $bab[0]['nomor_bab'] ?> - <?= $bab[0]['nama_bab'] ?></h2><br>
-            <a class="btn btn-primary" href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $id_bab; ?>">Kembali ke Daftar Soal</a>
+            <a class="btn btn-primary" href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $id_bab; ?>">Kembali ke Daftar Soal</a>
             <br><br>
             <table class="table">
                 <thead>

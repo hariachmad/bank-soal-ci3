@@ -38,12 +38,13 @@ class Ujian extends CI_Controller
         // $this->UserNilaiModel = new UserNilaiModel();
     }
 
-    public function tambahUjian($id)
+    public function tambahUjian($id,$idKelas)
     {
         $this->load->model('BabModel');
         $data = [
             'title' => 'Bank Soal',
             'id' => $id,
+            'idKelas' => $idKelas ,
             'bab' => $this->BabModel->getBab(),
             'session' => ["fullname" => $this->session->userdata("fullname")],
         ];
@@ -51,7 +52,7 @@ class Ujian extends CI_Controller
         $this->load->view('bankSoal/dosen/ujian/tambahUjian', $data);
     }
 
-    public function detailUjian($id_mata_kuliah, $id)
+    public function detailUjian($id_mata_kuliah, $id, $idKelas)
     {
         $this->load->model('BabUntukUjianModel');
         $this->load->model('BabModel');
@@ -75,6 +76,7 @@ class Ujian extends CI_Controller
             'soal_model' => $this->SoalModel->getSoal(),
             'bab_data' => $babData,
             'kode_ujian' => $this->KodeUjianModel->getKodeUjianByUjian($id),
+            'id_kelas' => $idKelas
         ];
         if (empty($data['ujian'])) {
             throw new Exception('Id Soal Ujian ' . $id . ' tidak ditemukan.');
@@ -83,7 +85,7 @@ class Ujian extends CI_Controller
         $this->load->view('bankSoal/dosen/ujian/detailUjian', $data);
     }
 
-    public function ubahUjian($id_mata_kuliah, $id)
+    public function ubahUjian($id_mata_kuliah, $id,$idKelas)
     {
         $this->load->model('UjianModel');
         $this->load->model('BabModel');
@@ -93,7 +95,8 @@ class Ujian extends CI_Controller
             'ujian' => $this->UjianModel->getUjian($id)[0],
             'id' => $id_mata_kuliah,
             'bab' => $this->BabModel->getBab(),
-            'bab_untuk_ujian' => $this->BabUntukUjianModel->getBab($id)
+            'bab_untuk_ujian' => $this->BabUntukUjianModel->getBab($id),
+            'id_kelas' => $idKelas
         ];
 
         $this->load->view('bankSoal/dosen/ujian/ubahUjian', $data);
@@ -102,12 +105,13 @@ class Ujian extends CI_Controller
     public function hapusUjian($id_mata_kuliah, $id)
     {
         $this->load->model('UjianModel');
+        $idKelas = $this->UjianModel->getUjian($id)[0]["id_kelas"];
         $this->UjianModel->delete($id);
-        $this->session->set_flashdata('pesan', 'Ujian berhasil dihapus');
-        redirect('/bankSoal/' . $id_mata_kuliah);
+        $this->session->set_flashdata('pesan', ' dihapus');
+        redirect('/bankSoal/' . $id_mata_kuliah . "/" . $idKelas);
     }
 
-    public function simpanUjian($id)
+    public function simpanUjian($id,$idKelas)
     {
         $this->load->database();
         $this->load->model('UjianModel');
@@ -115,6 +119,7 @@ class Ujian extends CI_Controller
         $query = $this->db->select('nama_ujian')
             ->from('ujian')
             ->where('id_mata_kuliah', $id)
+            ->where('id_kelas',$idKelas)
             ->where('nama_ujian', $this->input->post('nama_ujian'));
         $result = $query->get()->result_array();
         if ($result) {
@@ -153,7 +158,8 @@ class Ujian extends CI_Controller
             'random' => $random,
             'tunjukkan_nilai' => $tunjukkan_nilai,
             'ruang_ujian' => $this->input->post('ruang_ujian'),
-            'id_mata_kuliah' => $id
+            'id_mata_kuliah' => $id,
+            'id_kelas' => $idKelas
         ]);
         $insert_id = $this->db->insert_id();
         foreach ($pilih_soal as $value) {
@@ -163,11 +169,11 @@ class Ujian extends CI_Controller
             ]);
         }
 
-        $this->session->set_flashdata('pesan_ujian', 'Ujian berhasil ditambahkan');
-        redirect('/bankSoal/' . $id);
+        $this->session->set_flashdata('pesan_ujian', 'Quiz berhasil ditambahkan');
+        redirect('/bankSoal/' . $id."/".$idKelas);
     }
 
-    public function updateUjian($id_mata_kuliah, $id)
+    public function updateUjian($id_mata_kuliah, $id,$id_kelas)
     {
         $this->load->database();
         $this->load->model('UjianModel');
@@ -207,7 +213,8 @@ class Ujian extends CI_Controller
             'jumlah_soal' => $this->input->post('jumlah_soal'),
             'random' => $random,
             'tunjukkan_nilai' => $tunjukkan_nilai,
-            'id_mata_kuliah' => $id_mata_kuliah
+            'id_mata_kuliah' => $id_mata_kuliah,
+            'id_kelas'=> $id_kelas
         ]);
 
         $pilih_soal = $this->input->post('bab');
@@ -239,8 +246,8 @@ class Ujian extends CI_Controller
                 $this->db->where('id_ujian', $id)->where('id_bab', $row)->delete('nama_tabel_bab_untuk_ujian');
             }
         }
-        $this->session->set_flashdata('pesan', 'Ujian berhasil diubah');
-        redirect('bankSoal/' . $id_mata_kuliah);
+        $this->session->set_flashdata('pesan', 'Quiz berhasil diubah');
+        redirect('bankSoal/' . $id_mata_kuliah . "/" . $id_kelas);
     }
 
     public function saveCode()

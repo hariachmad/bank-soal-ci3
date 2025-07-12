@@ -34,7 +34,7 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
             </div>
@@ -67,7 +67,7 @@
                         <div class="col">
                             <h2 class="mt-2"><?= $ujian['nama_ujian'] ?></h2><br>
                             <a class="btn btn-primary"
-                                href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/">Kembali ke Halaman
+                                href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id_mata_kuliah; ?>/<?= $id_kelas; ?>">Kembali ke1 Halaman
                                 Sebelumnya</a><br><br>
                             <!-- <a id="exportExcel" class="btn btn-success" href="#" role="button">Export Nilai ke Excel</a> -->
                             <table class="table">
@@ -180,7 +180,7 @@
                                     console.log('Code saved:', randomCode);
                                 }
                             };
-                            xhttp.open('POST', '/bank-soal-ci3/index.php/bankSoal/save-code', true);
+                            xhttp.open('POST', '/bank-soal-ci3-dosen/index.php/bankSoal/save-code', true);
                             xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                             xhttp.send('kode_ujian=' + encodeURIComponent(randomCode) + '&id_ujian=' + encodeURIComponent(<?php echo $ujian['id']; ?>));
                         });

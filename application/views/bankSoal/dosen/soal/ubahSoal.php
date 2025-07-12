@@ -34,7 +34,7 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
             </div>
@@ -65,7 +65,7 @@
                 <div class="row">
                     <div class="col">
                         <h2 class="my-3">Ubah Soal</h2>
-                        <a href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $id_bab; ?>" class="btn btn-primary">Kembali
+                        <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $id_bab; ?>" class="btn btn-primary">Kembali
                             ke Daftar Soal</a>
                     </div>
                 </div>

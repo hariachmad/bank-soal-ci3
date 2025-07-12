@@ -34,7 +34,7 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
             </div>
@@ -66,9 +66,9 @@
                     <div class="row">
                         <div class="col">
                             <h2 class="mt-2">BAB <?= $bab['nomor_bab'] ?> - <?= $bab['nama_bab'] ?></h2><br>
-                            <a class="btn btn-primary" href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/">Kembali ke Daftar
+                            <a class="btn btn-primary" href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id_mata_kuliah; ?>/">Kembali ke Daftar
                                 Bab</a><br><br>
-                            <a href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $bab['id'] ?>/tambah_soal"
+                            <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $bab['id'] ?>/tambah_soal"
                                 class="btn btn-primary mb-3">Tambah Soal</a><br><br>
                             <h5 class="mt-2">Sub Capaian Pembelajaran (Sub CPMK)</h5>
                             <p style="white-space: pre-wrap;"><?= $bab['sub_cpmk'] ?></p><br>
@@ -93,12 +93,12 @@
                                                     <?= $k['soal'] ?>
                                                 </td>
                                                 <td>
-                                                    <a href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $bab['id'] ?>/detail_soal/<?= $k['id'] ?>"
+                                                    <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $bab['id'] ?>/detail_soal/<?= $k['id'] ?>"
                                                         class="btn btn-primary">Detail</a>
-                                                    <a href="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $bab['id'] ?>/ubah_soal/<?= $k['id'] ?>"
+                                                    <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $bab['id'] ?>/ubah_soal/<?= $k['id'] ?>"
                                                         class="btn btn-warning">Ubah</a>
                                                     <form
-                                                        action="/bank-soal-ci3/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $bab['id'] ?>/hapus_soal/<?= $k['id'] ?>">
+                                                        action="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $id_mata_kuliah; ?>/bab/<?= $bab['id'] ?>/hapus_soal/<?= $k['id'] ?>">
                                                         <!-- <input type="hidden" name="_method" value="DELETE"> -->
                                                         <button type="submit" class="btn btn-danger"
                                                             onclick="return confirm('Hapus Soal ini?');">Hapus</button>

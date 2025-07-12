@@ -34,19 +34,19 @@
                 <span class="ms-2 fs-5">I N S P I R E </span>
             </div>
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
-                        style="width: 30px;"><span class="ms-2 fs-8">Ujian</span></a>
+                        style="width: 30px;"><span class="ms-2 fs-8">Quiz</span></a>
             </div>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal/mata_kuliah/tambah_mata_kuliah"><img
+            <!-- <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal/mata_kuliah/tambah_mata_kuliah"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
                         style="width: 30px;"><span class="ms-2 fs-8">Tambah Mata-Kuliah</span></a>
-            </div>
+            </div> -->
             <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3/index.php/banksoal/form_hasil_ujian"><img
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/bank-soal-ci3-dosen/index.php/banksoal/form_hasil_ujian"><img
                         src="https://cdn-icons-png.flaticon.com/512/5/5178.png" class="ms-2" alt="Logo"
-                        style="width: 30px;"><span class="ms-2 fs-8">Hasil Ujian</span></a>
+                        style="width: 30px;"><span class="ms-2 fs-8">Hasil Quiz</span></a>
             </div>
         </div>
         <div id="page-content-wrapper" style="background-color: #f4f6f9;">
@@ -82,14 +82,29 @@
                         <h2 class="mt-2">Bank Soal</h2>
                         </br></br>
                         <div class="row flex-container justify-content-center gap-2">
-                            <?php foreach ($mataKuliah as $k): ?>
+                            <?php foreach ($kelasMataKuliah as $k): ?>
                                 <div class="card text-center" style="width: 18rem;">
                                     <div class="card-body">
-                                        <h5 class="card-title"><?= $k['nama_mata_kuliah'] ?></h5>
-                                        <p class="card-text"><?= $k['kode_mata_kuliah'] ?></p>
+                                        <div>
+                                            <h5 class="card-title"><?= $k['nama_mata_kuliah'] ?>
+                                                - <?= $k['nama_kelas'] ? $k['nama_kelas'] : $k['kode_kelas'] ?>
+                                            </h5>
+                                            <p>
+                                                Kode MK : <?= $k['kode_mata_kuliah']  ?> | <?= $k['sks'] ?> SKS
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                Jumlah total tugas : <span class="bg-primary px-1 text-white">1</span>
+                                            </div>
+                                        </div>
+                                                                                <div>
+                                            <p>
+                                                Jumlah total tugas : <span class="bg-success px-1 text-black">1</span>
+                                            </p>
+                                        </div>
                                         <div class="d-flex gap-1 justify-content-center">
-                                            <a href="/bank-soal-ci3/index.php/bankSoal/<?= $k['id']; ?>" class="btn btn-primary">Detail</a>
-                                            <a href="/bank-soal-ci3/index.php/banksoal/mata_kuliah/<?= $k['id']; ?>/hapus_mata_kuliah" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                                            <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $k['id_mata_kuliah']; ?>/<?= $k['id_kelas']; ?>" class="btn btn-primary">Quiz</a>
                                         </div>
 
                                     </div>
