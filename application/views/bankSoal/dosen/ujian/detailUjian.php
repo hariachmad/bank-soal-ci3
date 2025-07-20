@@ -79,38 +79,38 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Nama Ujian</td>
+                                        <td>Nama Quiz</td>
                                         <td><?= $ujian['nama_ujian'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Deskripsi Ujian</td>
+                                        <td>Deskripsi Quiz</td>
                                         <td><?= $ujian['deskripsi_ujian'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Waktu Buka Ujian</td>
+                                        <td>Waktu Buka Quiz</td>
                                         <td><?= $ujian['waktu_buka_ujian'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Waktu Tutup Ujian</td>
+                                        <td>Waktu Tutup Quiz</td>
                                         <td><?= $ujian['waktu_tutup_ujian'] ?></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>Durasi Ujian</td>
                                         <td><?= $ujian['durasi_ujian'] ?> Menit</td>
-                                    </tr>
-                                    <tr>
+                                    </tr> -->
+                                    <!-- <tr>
                                         <td>Nilai Minimum Kelulusan</td>
                                         <td><?= $ujian['nilai_minimum_kelulusan'] ?> %</td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td>Jumlah Soal</td>
                                         <td><?= $ujian['jumlah_soal'] ?></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>Acak Soal</td>
                                         <td><?= ($ujian['random']) === 0 ? 'Tidak' : 'Ya'; ?></td>
-                                    </tr>
-                                    <?php if ($ujian['ruang_ujian']): ?>
+                                    </tr> -->
+                                    <!-- <?php if ($ujian['ruang_ujian']): ?>
                                         <tr>
                                             <td>Ruang Ujian</td>
                                             <td><?= $ujian['ruang_ujian'] ?></td>
@@ -120,8 +120,8 @@
                                         <td>Tunjukkan Nilai</td>
                                         <td><?= ($ujian['tunjukkan_nilai']) === 0 ? 'Tidak' : 'Ya'; ?></td>
                                     </tr>
-                                    <tr>
-                                        <td>Kode Ujian</td>
+                                    <tr> -->
+                                        <td>Kode Quiz</td>
                                         <td>
                                             <p id="codeCell">
                                                 <?php if ($kode_ujian): ?>
@@ -136,7 +136,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <table class="table">
+                            <!-- <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col" style="width: 80%">Bab Untuk Ujian</th>
@@ -161,7 +161,7 @@
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
-                            </table>
+                            </table> -->
                         </div>
                     </div>
                 </div>

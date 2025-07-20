@@ -95,12 +95,12 @@
                                         </div>
                                         <div>
                                             <div>
-                                                Jumlah total tugas : <span class="bg-primary px-1 text-white">1</span>
+                                                Jumlah Total Quiz : <span class="bg-primary px-1 text-white">1</span>
                                             </div>
                                         </div>
                                                                                 <div>
                                             <p>
-                                                Jumlah total tugas : <span class="bg-success px-1 text-black">1</span>
+                                                Jumlah Quiz Aktif : <span class="bg-warning px-1 text-black">1</span>
                                             </p>
                                         </div>
                                         <div class="d-flex gap-1 justify-content-center">

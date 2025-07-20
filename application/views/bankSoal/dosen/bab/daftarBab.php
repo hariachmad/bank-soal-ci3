@@ -105,7 +105,7 @@
                                 </tbody>
                             </table>
 
-                            <h2 class="mt-2">Daftar Bab</h2><br>
+                            <!-- <h2 class="mt-2">Daftar Bab</h2><br>
                             <a href="/bank-soal-ci3-dosen/index.php/bankSoal/<?= $mataKuliah['id']; ?>/tambah_bab" class="btn btn-primary mb-3">Tambah
                                 Bab</a><br>
                             <?php if ($this->session->flashdata('pesan_bab')): ?>
@@ -143,7 +143,7 @@
                                         <?php endif; ?>
                                     <?php endforeach; ?>
                                 </tbody>
-                            </table>
+                            </table> -->
                         </div>
                     </div>
                 </div>

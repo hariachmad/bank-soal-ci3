@@ -41,11 +41,15 @@ class Ujian extends CI_Controller
     public function tambahUjian($id,$idKelas)
     {
         $this->load->model('BabModel');
+        $this->load->model('KelasModel');
+        $this->load->model('MataKuliahModel');
         $data = [
             'title' => 'Bank Soal',
             'id' => $id,
             'idKelas' => $idKelas ,
             'bab' => $this->BabModel->getBab(),
+            'mata_kuliah' => $this->MataKuliahModel->getMataKuliah(),
+            'kelas' => $this->KelasModel->getKelas(),
             'session' => ["fullname" => $this->session->userdata("fullname")],
         ];
 
@@ -113,13 +117,15 @@ class Ujian extends CI_Controller
 
     public function simpanUjian($id,$idKelas)
     {
+        var_dump($this->input->post('data_collection'));
+        exit();
         $this->load->database();
         $this->load->model('UjianModel');
-        $this->load->model('BabUntukUjianModel');
+        // $this->load->model('BabUntukUjianModel');
         $query = $this->db->select('nama_ujian')
             ->from('ujian')
-            ->where('id_mata_kuliah', $id)
-            ->where('id_kelas',$idKelas)
+            ->where('id_mata_kuliah', $this->input->post('mata_kuliah'))
+            ->where('id_kelas',$this->input->post('kelas'))
             ->where('nama_ujian', $this->input->post('nama_ujian'));
         $result = $query->get()->result_array();
         if ($result) {
@@ -145,29 +151,30 @@ class Ujian extends CI_Controller
         $waktu_buka_ujian = $this->input->post('waktu_buka_ujian');
         $waktu_tutup_ujian = $this->input->post('waktu_tutup_ujian');
         $random = isset($_POST['random']) ? 1 : 0;
-        $tunjukkan_nilai = isset($_POST['tunjukkan_nilai']) ? 1 : 0;
-        $pilih_soal = $this->input->post('bab');
+        // $tunjukkan_nilai = isset($_POST['tunjukkan_nilai']) ? 1 : 0;
+        // $pilih_soal = $this->input->post('bab');
         $this->UjianModel->insert([
             'nama_ujian' => $this->input->post('nama_ujian'),
-            'deskripsi_ujian' => $this->input->post('deskripsi_ujian'),
+            'deskripsi_ujian' => $this->input->post('isi_quiz'),
             'waktu_buka_ujian' => date('Y-m-d H:i:s', strtotime($waktu_buka_ujian)),
             'waktu_tutup_ujian' => date('Y-m-d H:i:s', strtotime($waktu_tutup_ujian)),
-            'durasi_ujian' => $this->input->post('durasi_ujian'),
-            'nilai_minimum_kelulusan' => $this->input->post('nilai_minimum_kelulusan'),
+            // 'durasi_ujian' => $this->input->post('durasi_ujian'),
+            // 'nilai_minimum_kelulusan' => $this->input->post('nilai_minimum_kelulusan'),
             'jumlah_soal' => $this->input->post('jumlah_soal'),
             'random' => $random,
-            'tunjukkan_nilai' => $tunjukkan_nilai,
-            'ruang_ujian' => $this->input->post('ruang_ujian'),
-            'id_mata_kuliah' => $id,
-            'id_kelas' => $idKelas
+            // 'tunjukkan_nilai' => $tunjukkan_nilai,
+            // 'ruang_ujian' => $this->input->post('ruang_ujian'),
+            // 'id_mata_kuliah' => $id,
+            'id_kelas' => $this->input->post('kelas'),
+            'id_mata_kuliah'=>$this->input->post('mata_kuliah')
         ]);
-        $insert_id = $this->db->insert_id();
-        foreach ($pilih_soal as $value) {
-            $this->BabUntukUjianModel->insert([
-                'id_bab' => $value,
-                'id_ujian' => $insert_id
-            ]);
-        }
+        // $insert_id = $this->db->insert_id();
+        // foreach ($pilih_soal as $value) {
+        //     $this->BabUntukUjianModel->insert([
+        //         'id_bab' => $value,
+        //         'id_ujian' => $insert_id
+        //     ]);
+        // }
 
         $this->session->set_flashdata('pesan_ujian', 'Quiz berhasil ditambahkan');
         redirect('/bankSoal/' . $id."/".$idKelas);
@@ -262,61 +269,6 @@ class Ujian extends CI_Controller
         ]);
 
         return $this->response->setJSON(['success' => true]);
-    }
-
-    public function exportToExcel($id)
-    {
-        $this->load->model("UjianModel");
-        $this->load->model("UserNilaiModel");
-        $this->load->model("UsersModel");
-        $ujian = $this->UjianModel->getUjian($id)[0];
-        $namaUjian = $ujian['nama_ujian'];
-        $stringLowercase = strtolower($namaUjian);
-        $stringWithUnderscores = str_replace(' ', '_', $stringLowercase);
-
-
-        // $nilai = $this->UserNilaiModel->where('id_ujian', $id)->findAll();
-        $this->db->where('id_ujian', $id);
-        $nilai = $this->db->get('user_nilai')->result_array;
-
-        // Create a new Spreadsheet object
-
-        $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet;
-        $sheet = $spreadsheet->getActiveSheet();
-        // Set the active sheet
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Add headers to the first row
-        $sheet->setCellValue('A1', 'Nama');
-        $sheet->setCellValue('B1', 'NIM');
-        $sheet->setCellValue('C1', 'Nilai');
-        $sheet->setCellValue('D1', 'Tanggal');
-
-        // Iterate over the results and add them to the spreadsheet
-        $row = 2;
-        foreach ($nilai as $result) {
-            $user = $this->UsersModel->GetUser($result['id_users']);
-            $nama_user = $user['fullname'];
-            $username_user = $user['username'];
-            $sheet->setCellValue('A' . $row, $nama_user);
-            $sheet->setCellValue('B' . $row, $username_user);
-            $sheet->setCellValue('C' . $row, $result['nilai']);
-            $sheet->setCellValue('D' . $row, $result['updated_at']);
-            $row++;
-        }
-
-        // Create a new Excel file writer
-        $writer = new Xlsx($spreadsheet);
-
-        // Set the appropriate headers for the response
-        $fileName = 'hasil_ujian_' . $stringWithUnderscores . '.xlsx';
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="' . $fileName . '"');
-        header('Cache-Control: max-age=0');
-
-        // Save the spreadsheet file to the response output
-        $writer->save('php://output');
-        die;
     }
 
     public function hasilUjian(){
